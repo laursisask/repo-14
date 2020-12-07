@@ -12,4 +12,4 @@ jobs:
           node-version: "12"
       - run: npm install
       - run: npm run build
-      - run: git diff --exit-code --quiet
+      - run: git diff --exit-code -- dist/
