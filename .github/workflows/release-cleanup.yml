@@ -1,15 +1,21 @@
-name: Prerelease cleanup
+name: Release
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: ["closed"]
+  issue_comment:
 
 jobs:
-  cleanup:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Clone PR branch
+        uses: actions/checkout@v2
+      - name: Create release
+        uses: ElisaOyj/gh-action-pr-release@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease_id: "rc"
       - uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
