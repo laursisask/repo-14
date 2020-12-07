@@ -1,0 +1,42 @@
+{
+  "name": "gh-action-prerelease-cleanup",
+  "version": "1.0.0",
+  "description": "Remove old prereleases while maintaining actual releases",
+  "main": "dist/index.js",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "before-after-hook": "^2.1.0",
+    "deprecation": "^2.3.1",
+    "is-plain-object": "^5.0.0",
+    "lru-cache": "^6.0.0",
+    "node-fetch": "^2.6.1",
+    "once": "^1.4.0",
+    "semver": "^7.3.4",
+    "tunnel": "^0.0.6",
+    "universal-user-agent": "^6.0.0",
+    "wrappy": "^1.0.2",
+    "yallist": "^4.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build index.js -o dist --source-map"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElisaOyj/gh-action-prerelease-cleanup.git"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions"
+  ],
+  "author": "Elisa Oyj",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ElisaOyj/gh-action-prerelease-cleanup/issues"
+  },
+  "homepage": "https://github.com/ElisaOyj/gh-action-prerelease-cleanup#readme",
+  "devDependencies": {
+    "@vercel/ncc": "^0.25.1"
+  }
+}
