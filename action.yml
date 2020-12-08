@@ -8,7 +8,10 @@ inputs:
     description: "Delete release tags"
     required: false
     default: true
+  dry-run:
+    description: "Only output releases that would be deleted"
+    required: false
+    default: false
 runs:
   using: "node12"
   main: "dist/index.js"
-
