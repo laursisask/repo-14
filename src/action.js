@@ -5,6 +5,7 @@ const { getOctokit, context } = require("@actions/github");
 exports.run = async function () {
   const token = core.getInput("github-token", { required: true });
   const deleteTags = core.getInput("delete-tags") === "true";
+  const dryRun = core.getInput("dry-run") === "true";
   const octokit = getOctokit(token);
   const { owner, repo } = context.repo;
   const listReleases = octokit.repos.listReleases.endpoint.merge({
@@ -25,6 +26,10 @@ exports.run = async function () {
   console.log(`Latest release is ${latestRelease}`);
   console.log("Outdated prereleases are:");
   outdatedPrereleases.map((prerelease) => console.log(prerelease.tag_name));
+  if (dryRun) {
+    core.setOutput("prereleases", JSON.stringify(outdatedPrereleases));
+    return;
+  }
   await Promise.all(
     outdatedPrereleases.map(async (prerelease) => {
       await octokit.repos.deleteRelease({

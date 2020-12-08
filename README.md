@@ -15,8 +15,22 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - uses: ElisaOyj/gh-action-prerelease-cleanup@v0.0.1
+      - uses: ElisaOyj/gh-action-prerelease-cleanup@v0.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           delete-tags: true
 ```
+
+## Inputs
+
+| Name           | Required | Description                                                                                                                             |
+| -------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `github-token` | yes      | GitHub token                                                                                                                            |
+| `delete-tags`  | no       | Delete corresponding Git tags, default: `true`                                                                                          |
+| `dry-run`      | no       | Do not delete releases but only print to console and set output called `prereleases` with the list of prereleases that would be deleted |
+
+## Outputs
+
+| Name          | Description                                                                           |
+| ------------- | ------------------------------------------------------------------------------------- |
+| `prereleases` | JSON string that contains a list of releases in the format returned by the GitHub API |
