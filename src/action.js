@@ -26,8 +26,8 @@ exports.run = async function () {
   console.log(`Latest release is ${latestRelease}`);
   console.log("Outdated prereleases are:");
   outdatedPrereleases.map((prerelease) => console.log(prerelease.tag_name));
+  core.setOutput("prereleases", JSON.stringify(outdatedPrereleases));
   if (dryRun) {
-    core.setOutput("prereleases", JSON.stringify(outdatedPrereleases));
     return;
   }
   await Promise.all(

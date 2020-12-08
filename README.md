@@ -31,6 +31,6 @@ jobs:
 
 ## Outputs
 
-| Name          | Description                                                                           |
-| ------------- | ------------------------------------------------------------------------------------- |
-| `prereleases` | JSON string that contains a list of releases in the format returned by the GitHub API |
+| Name          | Description                                                                                             |
+| ------------- | ------------------------------------------------------------------------------------------------------- |
+| `prereleases` | JSON string that contains a list of releases in the format returned by the GitHub API (always returned) |
