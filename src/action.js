@@ -38,11 +38,15 @@ exports.run = async function () {
         release_id: prerelease.id,
       });
       if (deleteTags) {
-        await octokit.git.deleteRef({
-          owner,
-          repo,
-          ref: `tags/${prerelease.tag_name}`,
-        });
+        try {
+          await octokit.git.deleteRef({
+            owner,
+            repo,
+            ref: `tags/${prerelease.tag_name}`,
+          });
+        } catch (err) {
+          console.log(err);
+        }
       }
     })
   );
