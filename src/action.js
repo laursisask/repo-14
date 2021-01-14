@@ -15,11 +15,13 @@ exports.run = async function () {
   const releases = await octokit.paginate(listReleases);
   const latestRelease = releases
     .filter((release) => !release.prerelease)
+    .filter((release) => semver.valid(release.tag_name))
     .map((release) => release.tag_name)
     .sort(semver.rcompare)
     .shift();
   const outdatedPrereleases = releases
     .filter((release) => release.prerelease)
+    .filter((release) => semver.valid(release.tag_name))
     .filter((release) =>
       semver.lt(release.tag_name, latestRelease, { includePrerelease: true })
     );
