@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ElisaOyj/gh-action-prerelease-cleanup.git"
+    "url": "git+https://github.com/elisa-actions/prerelease-cleanup.git"
   },
   "keywords": [
     "GitHub",
@@ -33,9 +33,9 @@
   "author": "Elisa Oyj",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/ElisaOyj/gh-action-prerelease-cleanup/issues"
+    "url": "https://github.com/elisa-actions/prerelease-cleanup/issues"
   },
-  "homepage": "https://github.com/ElisaOyj/gh-action-prerelease-cleanup#readme",
+  "homepage": "https://github.com/elisa-actions/prerelease-cleanup#readme",
   "devDependencies": {
     "@vercel/ncc": "^0.25.1"
   }

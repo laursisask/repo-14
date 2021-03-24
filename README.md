@@ -15,7 +15,7 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - uses: ElisaOyj/gh-action-prerelease-cleanup@v0.2.0
+      - uses: elisa-actions/prerelease-cleanup@v0.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           delete-tags: true
