@@ -123,6 +123,9 @@ func (tel *telemetryInitializer) init(res *resource.Resource, settings component
 
 func (tel *telemetryInitializer) initPrometheus(res *resource.Resource, logger *zap.Logger, address string, level configtelemetry.Level, asyncErrorChannel chan error) error {
 	promRegistry := prometheus.NewRegistry()
+	if err := promRegistry.Register(collectors.NewGoCollector()); err != nil {
+		logger.Info("Failed to register Go Collector")
+	}
 	if tel.useOtel {
 		if err := tel.initOpenTelemetry(res, promRegistry); err != nil {
 			return err
