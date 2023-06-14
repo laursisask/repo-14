@@ -12907,11 +12907,10 @@ exports.run = async function () {
   const dryRun = core.getInput("dry-run") === "true";
   const octokit = getOctokit(token);
   const { owner, repo } = context.repo;
-  const listReleases = octokit.repos.listReleases.endpoint.merge({
+  const releases = await octokit.paginate(octokit.rest.repos.listReleases, {
     owner,
     repo,
   });
-  const releases = await octokit.paginate(listReleases);
   const latestRelease = releases
     .filter((release) => !release.prerelease)
     .filter((release) => semver.valid(release.tag_name))
@@ -12933,14 +12932,14 @@ exports.run = async function () {
   }
   await Promise.all(
     outdatedPrereleases.map(async (prerelease) => {
-      await octokit.repos.deleteRelease({
+      await octokit.rest.repos.deleteRelease({
         owner,
         repo,
         release_id: prerelease.id,
       });
       if (deleteTags) {
         try {
-          await octokit.git.deleteRef({
+          await octokit.rest.git.deleteRef({
             owner,
             repo,
             ref: `tags/${prerelease.tag_name}`,
