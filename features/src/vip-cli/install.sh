@@ -19,6 +19,7 @@ if [ "${ENABLED}" = "true" ]; then
     npm i -g "@automattic/vip@${VERSION}"
 
     install -D -m 0755 -o root -g root import-vip-db.sh /usr/local/bin/import-vip-db
+    install -D -m 0755 -o root -g root import-vip-db.sh /usr/local/bin/vip-sync-db
 
     echo 'Done!'
 fi
