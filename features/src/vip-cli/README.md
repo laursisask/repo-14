@@ -1,7 +1,7 @@
 
-# VIP CLI (vip-cli)
+# VIP-CLI (vip-cli)
 
-Installs VIP CLI into the Dev Environment
+Installs VIP-CLI into the Dev Environment
 
 ## Example Usage
 
@@ -15,8 +15,8 @@ Installs VIP CLI into the Dev Environment
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| enabled | Enable VIP CLI | boolean | true |
-| version | Which version of VIP CLI to install | string | latest |
+| enabled | Enable VIP-CLI | boolean | true |
+| version | Which version of VIP-CLI to install | string | latest |
 
 
 
