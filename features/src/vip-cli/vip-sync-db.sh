@@ -63,6 +63,6 @@ echo "ℹ️ Flushing cache…"
 wp cache flush
 
 echo "ℹ️ Adding vipgo user…"
-wp dev-env-add-admin --username=vipgo --password=test
+wp dev-env-add-admin --username=vipgo --password=password
 
 echo "✓ Done!"
