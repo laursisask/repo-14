@@ -18,8 +18,7 @@ if [ "${ENABLED}" = "true" ]; then
     apk add --no-cache nodejs npm
     npm i -g "@automattic/vip@${VERSION}"
 
-    install -D -m 0755 -o root -g root import-vip-db.sh /usr/local/bin/import-vip-db
-    install -D -m 0755 -o root -g root import-vip-db.sh /usr/local/bin/vip-sync-db
+    install -D -m 0755 -o root -g root vip-sync-db.sh /usr/local/bin/vip-sync-db
 
     echo 'Done!'
 fi
