@@ -30,7 +30,7 @@ else
 fi
 
 install -D -m 0755 -o root -g root service-run /etc/sv/mariadb/run
-install -d -m 0755 -o root -g root /etc/service
+install -d -m 0755 -o root -g root /etc/service /etc/conf.d
 ln -sf /etc/sv/mariadb /etc/service/mariadb
 
 export MARIADB_USER
