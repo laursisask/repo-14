@@ -61,7 +61,7 @@ else
     sudo install -d -o "${MY_UID}" -g "${MY_GID}" -m 0755 /wp/wp-content/uploads
 fi
 
-sudo install -d -o "${MY_UID}" -g "${MY_GID}" /wp/config /wp/logs
+sudo install -d -o "${MY_UID}" -g "${MY_GID}" /wp/config /wp/log
 
 export WP_USERNAME="wordpress"
 export WP_PASSWORD="wordpress"
