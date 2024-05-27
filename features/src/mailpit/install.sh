@@ -20,11 +20,6 @@ fi
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing Mailpit...'
 
-    if [ -f /usr/local/bin/mailhog ]; then
-        echo '(!) Mailpit cannot be installed along with MailHog.'
-        exit 1
-    fi
-
     ARCH="$(arch)"
     LATEST=$(curl -w '%{url_effective}' -I -L -s -S https://github.com/axllent/mailpit/releases/latest -o /dev/null | sed -e 's|.*/||')
     if [ "${ARCH}" = "arm64" ] || [ "${ARCH}" = "aarch64" ]; then
