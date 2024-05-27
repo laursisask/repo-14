@@ -3,6 +3,6 @@
 # shellcheck source=/dev/null
 source dev-container-features-test-lib
 
-check "su-exec exists" sh -c "which su-exec"
+check "su-exec exists" which su-exec
 
 reportResults
