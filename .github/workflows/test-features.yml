@@ -32,6 +32,7 @@ jobs:
           - mcr.microsoft.com/devcontainers/base:debian
           - mcr.microsoft.com/devcontainers/base:alpine
         feature:
+          - base
           - su-exec
           - wp-cli
     steps:
