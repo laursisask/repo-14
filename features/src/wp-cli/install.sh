@@ -20,6 +20,9 @@ else
 fi
 
 if ! hash wget >/dev/null 2>&1; then
+    # shellcheck source=/dev/null
+    . /etc/os-release
+
     : "${ID:=}"
     : "${ID_LIKE:=${ID}}"
 
