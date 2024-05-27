@@ -45,10 +45,17 @@ jobs:
         run: devcontainer features test -p features --skip-scenarios -f ${{ matrix.feature }} -i ${{ matrix.baseImage }}
 
   global:
-    name: Test Global Scenarios
+    name: 'Global Scenario: ${{ matrix.test }}'
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        test:
+          - php81
+          - php82
+          - php83
     steps:
       - name: Checkout repository
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
@@ -61,10 +68,11 @@ jobs:
 
       - name: Build images
         run: |
+          REPO="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
           devcontainer build \
             --workspace-folder images/src/alpine-base \
-            --image-name=ghcr.io/automattic/vip-codespaces/alpine-base:latest \
+            --image-name="ghcr.io/${REPO}/alpine-base:latest" \
             --cache-from type=gha
 
       - name: "Run tests"
-        run: devcontainer features test -p features --global-scenarios-only
+        run: devcontainer features test -p features --global-scenarios-only --filter "${{ matrix.test }}"
