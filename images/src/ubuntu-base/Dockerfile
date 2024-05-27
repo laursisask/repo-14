@@ -1,22 +1,12 @@
-FROM ubuntu:24.04
-
-ARG USERNAME=vscode
-
-ENV CONTAINER_USER ${USERNAME}
-ENV LANG C.UTF-8
-ENV CHARSET UTF-8
-ENV LC_COLLATE C
+FROM buildpack-deps:noble-curl@sha256:8a6126ff5fbb9bd03dd782858536df8af3edbbd61bd64d9fbb7db22ce5328a35
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         gettext \
-        gnupg \
         moreutils \
-        netbase \
         runit \
         software-properties-common \
-        subversion \
         tzdata \
     && rm -rf /var/lib/apt/lists/*
 

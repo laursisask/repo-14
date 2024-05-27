@@ -9,9 +9,15 @@
     "x-build": {
         "name": "Ubuntu",
         "image-name": "ubuntu-base",
-        "image-version": "0.0.3"
+        "image-version": "0.0.4"
     },
     "remoteUser": "vscode",
+    "containerEnv": {
+        "CHARSET": "UTF-8",
+        "CONTAINER_USER": "vscode",
+        "LANG": "C.UTF-8",
+        "LC_COLLATE": "C"
+    },
     "remoteEnv": {
         "SHELL": "/bin/bash"
     },
