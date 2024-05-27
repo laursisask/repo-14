@@ -9,21 +9,19 @@
     "x-build": {
         "name": "Ubuntu",
         "image-name": "ubuntu-base",
-        "image-version": "0.0.2"
+        "image-version": "0.0.3"
     },
     "remoteUser": "vscode",
     "remoteEnv": {
         "SHELL": "/bin/bash"
     },
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2": {
+        "ghcr.io/devcontainers/features/common-utils:2.4.3": {
             "installZsh": false,
             "installOhMyZsh": false,
             "installOhMyZshConfig": false,
             "upgradePackages": true,
-            "username": "vscode",
-            "userUid": 1000,
-            "userGid": 1000
+            "username": "vscode"
         },
         "ghcr.io/devcontainers/features/github-cli:1.0.11": {},
         "ghcr.io/devcontainers/features/git:1.2.0": {}
