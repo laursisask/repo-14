@@ -33,6 +33,7 @@ jobs:
           - mcr.microsoft.com/devcontainers/base:alpine
         feature:
           - base
+          - dev-tools
           - su-exec
           - wp-cli
     steps:
