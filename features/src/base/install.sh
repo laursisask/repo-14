@@ -9,16 +9,12 @@ if [ "$(id -u || true)" -ne 0 ]; then
     exit 1
 fi
 
-if [ -z "${_REMOTE_USER}" ] || [ "${_REMOTE_USER}" = "root" ]; then
-    THE_USER="${CONTAINER_USER:-www-data}"
-else
-    THE_USER="${_REMOTE_USER}"
-fi
+: "${_REMOTE_USER:?"_REMOTE_USER is required"}"
 
-HOME_DIR="$(getent passwd "${THE_USER}" | cut -d: -f6)"
+HOME_DIR="$(getent passwd "${_REMOTE_USER}" | cut -d: -f6)"
 
-install -d -D -m 0755 -o "${THE_USER}" -g "${THE_USER}" "${HOME_DIR}/.local/share/vip-codespaces"
-install -d -D -m 0755 -o "${THE_USER}" -g "${THE_USER}" "${HOME_DIR}/.local/share/vip-codespaces/login"
+install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local/share/vip-codespaces"
+install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local/share/vip-codespaces/login"
 
-install -m 0644 -o "${THE_USER}" -g "${THE_USER}" .bashrc "${HOME_DIR}/.bashrc"
-install -m 0644 -o "${THE_USER}" -g "${THE_USER}" 001-welcome.sh "${HOME_DIR}/.local/share/vip-codespaces/login/001-welcome.sh"
+install -m 0644 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" .bashrc "${HOME_DIR}/.bashrc"
+install -m 0644 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" 001-welcome.sh "${HOME_DIR}/.local/share/vip-codespaces/login/001-welcome.sh"
