@@ -3,6 +3,8 @@ name: Release
 on:
   pull_request:
     types: ["closed"]
+    branches:
+      - main
   issue_comment:
 
 jobs:
