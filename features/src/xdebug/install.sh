@@ -5,7 +5,15 @@ set -e
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
 xdebug_81() {
-    apk add --no-cache php81-pecl-xdebug
+    alpine_version="$(cat /etc/alpine-release)"
+    if [ "$(printf '%s\n' "3.20" "${alpine_version}" | sort -V | head -n1 || true)" = "3.20" ]; then
+        REPOS="-X https://dl-cdn.alpinelinux.org/alpine/v3.19/main -X https://dl-cdn.alpinelinux.org/alpine/v3.19/community"
+    else
+        REPOS=""
+    fi
+
+    # shellcheck disable=SC2086 # We need to expand $REPOS
+    apk add --no-cache php81-pecl-xdebug ${REPOS}
 }
 
 xdebug_82() {
@@ -38,9 +46,7 @@ if [ "${ENABLED}" = "true" ]; then
     fi
 
     if [ ! -f /etc/dev-env-features/php ]; then
-        if apk list --installed php8 2>/dev/null; then
-            version="8.0"
-        elif apk list --installed php81 2>/dev/null; then
+        if apk list --installed php81 2>/dev/null; then
             version="8.1"
         elif apk list --installed php82 2>/dev/null; then
             version="8.2"
@@ -55,7 +61,7 @@ if [ "${ENABLED}" = "true" ]; then
     fi
 
     case "${version}" in
-        8.0|8.1)
+        8.1)
             xdebug_81
         ;;
         8.2)
