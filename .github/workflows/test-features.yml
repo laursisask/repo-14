@@ -37,6 +37,7 @@ jobs:
           - php
           - mailpit
           - mc
+          - ssh
           - su-exec
           - vip-cli
           - wp-cli
