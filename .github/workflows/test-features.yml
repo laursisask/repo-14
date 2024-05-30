@@ -36,6 +36,7 @@ jobs:
           - dev-tools
           - php
           - mailpit
+          - mc
           - su-exec
           - vip-cli
           - wp-cli
