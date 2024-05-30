@@ -9,16 +9,75 @@ if [ "$(id -u || true)" -ne 0 ]; then
     exit 1
 fi
 
-if [ -z "${_REMOTE_USER}" ] || [ "${_REMOTE_USER}" = "root" ]; then
-    MAILPIT_USER=nobody
-else
-    MAILPIT_USER="${_REMOTE_USER}"
-fi
-
+: "${_REMOTE_USER:?"_REMOTE_USER is required"}"
 : "${ENABLED:=}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing Mailpit...'
+
+    # shellcheck source=/dev/null
+    . /etc/os-release
+
+    : "${ID:=}"
+    : "${ID_LIKE:=${ID}}"
+    PHP_INI_DIR=
+    NEED_ENMOD=
+
+    case "${ID_LIKE}" in
+        "debian")
+            PACKAGES=""
+            if ! hash curl >/dev/null 2>&1; then
+                PACKAGES="${PACKAGES} curl"
+            fi
+
+            if ! hash update-ca-certificates >/dev/null 2>&1; then
+                PACKAGES="${PACKAGES} ca-certificates"
+            fi
+
+            if ! hash envsubst >/dev/null 2>&1; then
+                PACKAGES="${PACKAGES} gettext"
+            fi
+
+            if [ -n "${PACKAGES}" ]; then
+                apt-get update
+                # shellcheck disable=SC2086
+                apt-get install -y --no-install-recommends ${PACKAGES}
+            fi
+
+            apt-get clean
+            rm -rf /var/lib/apt/lists/*
+
+            if hash php >/dev/null 2>&1; then
+                PHP_INI_DIR="/etc/php/$(php -r 'echo PHP_MAJOR_VERSION, ".", PHP_MINOR_VERSION;')/mods-available"
+                NEED_ENMOD=1
+            fi
+        ;;
+
+        "alpine")
+            PACKAGES=""
+            if ! hash curl >/dev/null 2>&1; then
+                PACKAGES="${PACKAGES} curl"
+            fi
+
+            if ! hash envsubst >/dev/null 2>&1; then
+                PACKAGES="${PACKAGES} gettext"
+            fi
+
+            if [ -n "${PACKAGES}" ]; then
+                # shellcheck disable=SC2086
+                apk add --no-cache ${PACKAGES}
+            fi
+
+            if hash php >/dev/null 2>&1; then
+                PHP_INI_DIR="/etc/php$(php -r 'echo PHP_MAJOR_VERSION, PHP_MINOR_VERSION;')/conf.d"
+            fi
+        ;;
+
+        *)
+            echo "(!) Unsupported distribution: ${ID}"
+            exit 1
+        ;;
+    esac
 
     ARCH="$(arch)"
     LATEST=$(curl -w '%{url_effective}' -I -L -s -S https://github.com/axllent/mailpit/releases/latest -o /dev/null | sed -e 's|.*/||')
@@ -34,24 +93,24 @@ if [ "${ENABLED}" = "true" ]; then
     mkdir -p /tmp/mailpit
     ( \
         cd /tmp/mailpit && \
-        wget -q "https://github.com/axllent/mailpit/releases/download/${LATEST}/mailpit-linux-${ARCH}.tar.gz" -O - | tar -xz && \
+        curl -SL "https://github.com/axllent/mailpit/releases/download/${LATEST}/mailpit-linux-${ARCH}.tar.gz" | tar -xz && \
         install -m 0755 -o root -g root mailpit /usr/local/bin/mailpit && \
-        cd .. && \
         rm -rf /tmp/mailpit \
     )
 
-    : "${PHP_INI_DIR:=/etc/php}":
-
-    chmod 0755 /usr/local/bin/mailpit
-    install -m 0644 php-mailpit.ini "${PHP_INI_DIR}/conf.d/mailpit.ini"
+    if [ -n "${PHP_INI_DIR}" ]; then
+        install -m 0644 php-mailpit.ini "${PHP_INI_DIR}/mailpit.ini"
+        if [ -n "${NEED_ENMOD}" ]; then
+            phpenmod mailpit
+        fi
+    fi
 
     install -D -m 0755 -o root -g root service-run /etc/sv/mailpit/run
     install -d -m 0755 -o root -g root /etc/service
     ln -sf /etc/sv/mailpit /etc/service/mailpit
 
-    export MAILPIT_USER
     # shellcheck disable=SC2016
-    envsubst '$MAILPIT_USER' < conf-mailpit.tpl > /etc/conf.d/mailpit
+    envsubst '$_REMOTE_USER' < conf-mailpit.tpl > /etc/conf.d/mailpit
 
     echo 'Done!'
 fi
