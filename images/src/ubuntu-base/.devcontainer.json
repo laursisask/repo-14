@@ -1,12 +1,12 @@
 {
     "build": {
         "dockerfile": "./Dockerfile",
-        "context": ".",
+        "context": "."
     },
     "x-build": {
         "name": "Ubuntu",
         "image-name": "ubuntu-base",
-        "image-version": "0.0.5"
+        "image-version": "0.0.6"
     },
     "remoteUser": "vscode",
     "containerEnv": {
