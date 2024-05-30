@@ -105,12 +105,10 @@ if [ "${ENABLED}" = "true" ]; then
         fi
     fi
 
-    install -D -m 0755 -o root -g root service-run /etc/sv/mailpit/run
-    install -d -m 0755 -o root -g root /etc/service
-    ln -sf /etc/sv/mailpit /etc/service/mailpit
-
+    install -D -d -m 0755 -o root -g root /etc/service /etc/sv/mailpit
     # shellcheck disable=SC2016
-    envsubst '$_REMOTE_USER' < conf-mailpit.tpl > /etc/conf.d/mailpit
+    envsubst '$_REMOTE_USER' < service-run.tpl > /etc/sv/mailpit/run && chmod 0755 /etc/sv/mailpit/run
+    ln -sf /etc/sv/mailpit /etc/service/mailpit
 
     echo 'Done!'
 fi
