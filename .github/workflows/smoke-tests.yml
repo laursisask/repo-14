@@ -68,7 +68,10 @@ jobs:
         run: |
           REPO="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
           for image in *; do
-            docker buildx build -t "ghcr.io/${REPO}/${image}:latest" --cache-from type=gha --cache-to type=gha,mode=max "./${image}"
+            devcontainer build \
+              --workspace-folder "./${image}" \
+              --image-name="ghcr.io/${REPO}/${image}:latest" \
+              --cache-from type=gha
           done
 
       - name: Build
