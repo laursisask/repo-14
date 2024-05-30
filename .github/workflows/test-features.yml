@@ -27,13 +27,14 @@ jobs:
       matrix:
         baseImage:
           - debian:latest
-          - ubuntu:latest
+          - ubuntu:jammy # noble is not supported by ondrej/php yet
           - mcr.microsoft.com/devcontainers/base:ubuntu
           - mcr.microsoft.com/devcontainers/base:debian
           - mcr.microsoft.com/devcontainers/base:alpine
         feature:
           - base
           - dev-tools
+          - php
           - su-exec
           - vip-cli
           - wp-cli
