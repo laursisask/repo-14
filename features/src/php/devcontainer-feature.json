@@ -2,10 +2,7 @@
     "id": "php",
     "name": "PHP",
     "description": "Installs PHP into the Dev Environment",
-    "version": "2.3.1",
-    "containerEnv": {
-        "PHP_INI_DIR": "/etc/php"
-    },
+    "version": "2.4.0",
     "options": {
         "version": {
             "type": "string",
@@ -44,8 +41,5 @@
                 "phpSniffer.autoDetect": true
             }
         }
-    },
-    "installsAfter": [
-        "ghcr.io/automattic/vip-codespaces/base"
-    ]
+    }
 }
