@@ -3,6 +3,6 @@
 # shellcheck source=/dev/null
 source dev-container-features-test-lib
 
-check "Built successfully" sh -c "exit 0"
+source ./global-checks.sh
 
 reportResults
