@@ -1,0 +1,123 @@
+{
+    "alpine-81": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "PHP_VERSION": "8.1"
+        },
+        "features": {
+            "php": {
+                "version": "8.1",
+                "composer": true
+            },
+            "mailpit": {},
+            "vip-cli": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+    "alpine-82": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "PHP_VERSION": "8.2"
+        },
+        "features": {
+            "php": {
+                "version": "8.2",
+                "composer": true
+            },
+            "mailpit": {},
+            "vip-cli": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+    "alpine-83": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "PHP_VERSION": "8.3"
+        },
+        "features": {
+            "php": {
+                "version": "8.3",
+                "composer": true
+            },
+            "mailpit": {},
+            "vip-cli": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+
+    "ubuntu-81": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "PHP_VERSION": "8.1"
+        },
+        "features": {
+            "php": {
+                "version": "8.1",
+                "composer": true
+            },
+            "mailpit": {},
+            "vip-cli": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+    "ubuntu-82": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "PHP_VERSION": "8.2"
+        },
+        "features": {
+            "php": {
+                "version": "8.2",
+                "composer": true
+            },
+            "mailpit": {},
+            "vip-cli": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+    "ubuntu-83": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "PHP_VERSION": "8.3"
+        },
+        "features": {
+            "php": {
+                "version": "8.3",
+                "composer": true
+            },
+            "mailpit": {},
+            "vip-cli": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    }
+}

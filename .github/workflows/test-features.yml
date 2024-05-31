@@ -61,6 +61,7 @@ jobs:
       matrix:
         test:
           - mailpit
+          - php
           - ssh
     steps:
       - name: Checkout repository

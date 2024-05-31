@@ -17,4 +17,6 @@ for module in ${MODULES}; do
     check "PHP module ${module} exists" sh -c "php -m | grep -qi ^${module}$"
 done
 
+check "composer version" composer --version
+
 reportResults
