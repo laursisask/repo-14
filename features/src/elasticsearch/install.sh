@@ -19,7 +19,7 @@ if [ "${ENABLED}" = "true" ]; then
 
     if [ -z "${_REMOTE_USER}" ] || [ "${_REMOTE_USER}" = "root" ]; then
         ES_USER=elasticsearch
-        adduser -M -r -d /usr/share/elasticsearch -s /sbin/nologin "${ES_USER}"
+        useradd -M -r -d /usr/share/elasticsearch -s /sbin/nologin "${ES_USER}"
     else
         ES_USER="${_REMOTE_USER}"
     fi
