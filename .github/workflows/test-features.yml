@@ -36,6 +36,7 @@ jobs:
           - php
           - mailpit
           - mc
+          - memcached
           - ssh
           - su-exec
           - vip-cli
@@ -60,6 +61,7 @@ jobs:
       matrix:
         test:
           - feature: mailpit
+          - feature: memcached
           - feature: php
             filter: php81
           - feature: php
