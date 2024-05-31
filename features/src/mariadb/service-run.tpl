@@ -11,17 +11,17 @@ fi
 : "${MARIADB_USER:=mysql}"
 : "${MARIADB_DATADIR:=/var/lib/mysql}"
 
-/usr/bin/install -d -D -m 02755 -o "${MARIADB_USER}" -g "${MARIADB_USER}" "${MARIADB_DATADIR}"
+install -d -D -m 02755 -o "${MARIADB_USER}" -g "${MARIADB_USER}" "${MARIADB_DATADIR}"
 chown -R "${MARIADB_USER}:${MARIADB_USER}" "${MARIADB_DATADIR}"
 
-/usr/bin/install -d /run/mysqld -o "${MARIADB_USER}" -g "${MARIADB_USER}"
+install -d /run/mysqld -o "${MARIADB_USER}" -g "${MARIADB_USER}"
 
 if [ ! -d "${MARIADB_DATADIR}/mysql" ]; then
-    /usr/bin/mysql_install_db --auth-root-authentication-method=normal --skip-test-db --user="${MARIADB_USER}" --datadir="${MARIADB_DATADIR}"
+    mysql_install_db --auth-root-authentication-method=normal --skip-test-db --user="${MARIADB_USER}" --datadir="${MARIADB_DATADIR}"
 fi
 
-exec /sbin/su-exec "${MARIADB_USER}" \
-    /usr/bin/mysqld \
+exec chpst -u "${MARIADB_USER}:${MARIADB_USER}" \
+    mysqld \
         --datadir="${MARIADB_DATADIR}" \
         --sql-mode=ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION \
         --max_allowed_packet=67M \
