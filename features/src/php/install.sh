@@ -222,7 +222,7 @@ setup_php83_alpine() {
 
 setup_php81_deb() {
     eatmydata apt-get install -y --no-install-recommends ghostscript
-    eatmydata apt-get install -y \
+    eatmydata apt-get install -y --no-install-recommends \
         php8.1-cli php8.1-fpm \
         php8.1-apcu php8.1-bcmath php8.1-curl php8.1-gd php8.1-gmagick php8.1-gmp php8.1-gnupg php8.1-intl php8.1-igbinary php8.1-mbstring php8.1-mcrypt \
         php8.1-memcache php8.1-memcached php8.1-mysql php8.1-soap php8.1-sqlite3 php8.1-ssh2 php8.1-xml php8.1-zip
@@ -245,11 +245,13 @@ setup_php81_deb() {
 
     # shellcheck disable=SC2086
     eatmydata apt-get remove --purge -y ${PACKAGES}
+
+    update-rc.d php8.1-fpm remove
 }
 
 setup_php82_deb() {
     eatmydata apt-get install -y --no-install-recommends ghostscript
-    eatmydata apt-get install -y \
+    eatmydata apt-get install -y --no-install-recommends \
         php8.2-cli php8.2-fpm \
         php8.2-apcu php8.2-bcmath php8.2-curl php8.2-gd php8.2-gmagick php8.2-gmp php8.2-gnupg php8.2-intl php8.2-igbinary php8.2-mbstring php8.2-mcrypt \
         php8.2-memcache php8.2-memcached php8.2-mysql php8.2-soap php8.2-sqlite3 php8.2-ssh2 php8.2-xml php8.2-zip
@@ -272,11 +274,13 @@ setup_php82_deb() {
 
     # shellcheck disable=SC2086
     eatmydata apt-get remove --purge -y ${PACKAGES}
+
+    update-rc.d php8.2-fpm remove
 }
 
 setup_php83_deb() {
     eatmydata apt-get install -y --no-install-recommends ghostscript
-    eatmydata apt-get install -y \
+    eatmydata apt-get install -y --no-install-recommends \
         php8.3-cli php8.3-fpm \
         php8.3-apcu php8.3-bcmath php8.3-curl php8.3-gd php8.3-gmagick php8.3-gmp php8.3-gnupg php8.3-igbinary php8.3-intl php8.3-mbstring php8.3-mcrypt \
         php8.3-memcache php8.3-memcached php8.3-mysql php8.3-soap php8.3-sqlite3 php8.3-ssh2 php8.3-xml php8.3-zip
@@ -299,6 +303,8 @@ setup_php83_deb() {
 
     # shellcheck disable=SC2086
     eatmydata apt-get remove --purge -y ${PACKAGES}
+
+    update-rc.d php8.3-fpm remove
 }
 
 if [ "$(id -u || true)" -ne 0 ]; then
