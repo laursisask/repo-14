@@ -11,6 +11,6 @@ ES_JAVA_OPTS="-Des.cgroups.hierarchy.override=/ ${ES_JAVA_OPTS:-}"
 export ES_JAVA_HOME ES_JAVA_OPTS
 
 # shellcheck disable=SC2154 # ES_USER and ES_DATADIR are substituted by `install.sh`.
-chown -R "${ES_USER}:${ES_USER}" "${ES_DATADIR}/data" /opt/elasticsearch/logs
+chown -R "${ES_USER}:${ES_USER}" "${ES_DATADIR}/data" /opt/elasticsearch/config /opt/elasticsearch/logs /opt/elasticsearch/tmp /opt/elasticsearch/plugins
 # shellcheck disable=SC2154
-exec su-exec "${ES_USER}" /usr/bin/elasticsearch
+exec chpst -u "${ES_USER}:${ES_USER}" /usr/bin/elasticsearch
