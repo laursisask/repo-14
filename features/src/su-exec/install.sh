@@ -24,6 +24,7 @@ fi
 
 case "${ID_LIKE}" in
     "debian")
+        export DEBIAN_FRONTEND=noninteractive
         PACKAGES=""
         if ! dpkg -s libc6-dev >/dev/null 2>&1; then
             PACKAGES="${PACKAGES} libc6-dev"

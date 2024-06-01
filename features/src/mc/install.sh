@@ -20,6 +20,7 @@ if [ "${ENABLED:-}" = "true" ]; then
 
     case "${ID_LIKE}" in
         "debian")
+            export DEBIAN_FRONTEND=noninteractive
             apt-get update
             apt-get install -y --no-install-recommends mc
             apt-get clean
