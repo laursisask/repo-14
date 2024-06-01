@@ -488,5 +488,5 @@ if [ "${COMPOSER}" = "true" ]; then
 fi
 
 install -d /etc/dev-env-features
-echo "${VERSION}" > /etc/dev-env-features/php
+echo "${PHP_VERSION}" > /etc/dev-env-features/php
 echo 'Done!'
