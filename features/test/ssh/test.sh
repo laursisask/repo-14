@@ -4,7 +4,7 @@
 source dev-container-features-test-lib
 
 check "sshd exists" which sshd
-check "/etc/sv/openssh/run exists and is execuatble" test -x /etc/sv/openssh/run
+check "/etc/sv/openssh/run exists and is executable" test -x /etc/sv/openssh/run
 check "/etc/service/openssh is a symlink" test -L /etc/service/openssh
 
 if [[ "$(id -u || true)" -eq 0 ]]; then
