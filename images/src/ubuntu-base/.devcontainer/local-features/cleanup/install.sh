@@ -7,5 +7,5 @@ if [ "$(id -u || true)" -ne 0 ]; then
     exit 1
 fi
 
-update-rc.d dbus remove
-update-rc.d rsync remove
+update-rc.d -f dbus remove
+update-rc.d -f rsync remove

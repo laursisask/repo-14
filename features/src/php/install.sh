@@ -246,7 +246,7 @@ setup_php81_deb() {
     # shellcheck disable=SC2086
     eatmydata apt-get remove --purge -y ${PACKAGES}
 
-    update-rc.d php8.1-fpm remove
+    update-rc.d -f php8.1-fpm remove
 }
 
 setup_php82_deb() {
@@ -275,7 +275,7 @@ setup_php82_deb() {
     # shellcheck disable=SC2086
     eatmydata apt-get remove --purge -y ${PACKAGES}
 
-    update-rc.d php8.2-fpm remove
+    update-rc.d -f php8.2-fpm remove
 }
 
 setup_php83_deb() {
@@ -304,7 +304,7 @@ setup_php83_deb() {
     # shellcheck disable=SC2086
     eatmydata apt-get remove --purge -y ${PACKAGES}
 
-    update-rc.d php8.3-fpm remove
+    update-rc.d -f php8.3-fpm remove
 }
 
 if [ "$(id -u || true)" -ne 0 ]; then

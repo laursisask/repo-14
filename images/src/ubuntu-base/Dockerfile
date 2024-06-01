@@ -9,7 +9,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN \
-    update-rc.d procps remove && \
+    update-rc.d -f procps remove && \
     touch /etc/runit/no.emulate.sysv
 
 ENTRYPOINT ["/lib/runit/runit-init"]

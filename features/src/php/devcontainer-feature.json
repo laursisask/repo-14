@@ -2,7 +2,7 @@
     "id": "php",
     "name": "PHP",
     "description": "Installs PHP into the Dev Environment",
-    "version": "2.4.2",
+    "version": "2.4.3",
     "options": {
         "version": {
             "type": "string",

@@ -1,6 +1,6 @@
 {
     "id": "cleanup",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "Remove unnecessary files",
     "installsAfter": [
         "ghcr.io/devcontainers/features/common-utils"

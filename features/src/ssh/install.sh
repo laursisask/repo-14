@@ -27,7 +27,7 @@ if [ "${ENABLED:-}" = "true" ]; then
             apt-get install -y --no-install-recommends openssh-server
             apt-get clean
             rm -rf /var/lib/apt/lists/*
-            update-rc.d ssh remove
+            update-rc.d -f ssh remove
             PRIVSEP_DIR=/run/sshd
         ;;
 
