@@ -9,6 +9,7 @@ if [ "$(id -u || true)" -ne 0 ]; then
     exit 1
 fi
 
+: "${_REMOTE_USER:?"_REMOTE_USER is required"}"
 : "${ENABLED:=}"
 : "${BRANCH:=staging}"
 : "${DEVELOPMENT_MODE:=false}"
@@ -16,26 +17,18 @@ fi
 if [ "${ENABLED}" != "false" ]; then
     echo '(*) Installing VIP Go mu-plugins...'
 
-    if [ -z "${_REMOTE_USER}" ] || [ "${_REMOTE_USER}" = "root" ]; then
-        WEB_USER=www-data
-    else
-        WEB_USER="${_REMOTE_USER}"
-    fi
-
     mkdir -p /wp/wp-content/mu-plugins
-    git clone --depth=1 --recurse-submodules --shallow-submodules https://github.com/Automattic/vip-go-mu-plugins.git /tmp/mu-plugins --branch "${BRANCH}" --single-branch
-    git clone --depth=1 https://github.com/Automattic/vip-go-mu-plugins-ext.git /tmp/mu-plugins-ext
+    git clone --depth=1 --recurse-submodules --shallow-submodules https://github.com/Automattic/vip-go-mu-plugins.git /tmp/mu-plugins --branch "${BRANCH}" --single-branch -j4
+    git clone --depth=1 https://github.com/Automattic/vip-go-mu-plugins-ext.git /tmp/mu-plugins-ext --single-branch
     if [ "${DEVELOPMENT_MODE}" != 'true' ]; then
         rsync -a /tmp/mu-plugins/ /tmp/mu-plugins-ext/ /wp/wp-content/mu-plugins --exclude-from="/tmp/mu-plugins/.dockerignore" --exclude-from="/tmp/mu-plugins-ext/.dockerignore"
-        find /wp/wp-content/mu-plugins -name .svn -type d -exec rm -rfv {} \; 2> /dev/null
-        find /wp/wp-content/mu-plugins -name .github -type d -exec rm -rfv {} \; 2> /dev/null
-        find /wp/wp-content/mu-plugins -name ".git*" -exec rm -rfv {} \; 2> /dev/null
+        find /wp/wp-content/mu-plugins \( -name .svn -o -name .github -o -name ".git*" \) -type d -exec rm -rfv {} \; 2> /dev/null
     else
         rsync -a /tmp/mu-plugins/ /tmp/mu-plugins-ext/ /wp/wp-content/mu-plugins
     fi
 
     rm -rf /tmp/mu-plugins /tmp/mu-plugins-ext
 
-    chown -R "${WEB_USER}:${WEB_USER}" /wp/wp-content/mu-plugins
+    chown -R "${_REMOTE_USER}:${_REMOTE_USER}" /wp/wp-content/mu-plugins
     echo 'Done!'
 fi
