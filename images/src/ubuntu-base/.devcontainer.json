@@ -6,7 +6,7 @@
     "x-build": {
         "name": "Ubuntu",
         "image-name": "ubuntu-base",
-        "image-version": "0.0.7"
+        "image-version": "0.0.8"
     },
     "remoteUser": "vscode",
     "containerEnv": {
@@ -29,6 +29,7 @@
         "ghcr.io/devcontainers/features/github-cli:1.0.11": {},
         "ghcr.io/devcontainers/features/git:1.2.0": {},
         "./.devcontainer/local-features/sudo": {},
-        "./.devcontainer/local-features/cleanup": {}
+        "./.devcontainer/local-features/cleanup": {},
+        "./.devcontainer/local-features/syslog": {}
     }
 }
