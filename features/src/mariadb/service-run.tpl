@@ -8,9 +8,7 @@ if [ -f /etc/conf.d/mariadb ]; then
     . /etc/conf.d/mariadb
 fi
 
-: "${MARIADB_USER:=mysql}"
-: "${MARIADB_DATADIR:=/var/lib/mysql}"
-
+# shellcheck disable=SC2154
 install -d -D -m 02755 -o "${MARIADB_USER}" -g "${MARIADB_USER}" "${MARIADB_DATADIR}"
 chown -R "${MARIADB_USER}:${MARIADB_USER}" "${MARIADB_DATADIR}"
 
