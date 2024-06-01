@@ -2,4 +2,4 @@
 
 exec 2>&1
 
-/usr/sbin/crond -f -d 8 -L /var/log/cron.log
+exec /usr/sbin/crond -f -l 8
