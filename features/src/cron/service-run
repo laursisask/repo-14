@@ -2,4 +2,6 @@
 
 exec 2>&1
 
+sv start syslog || true
+
 exec /usr/sbin/crond -f -l 8
