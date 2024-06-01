@@ -2,5 +2,5 @@
     "id": "syslog",
     "name": "Syslog",
     "description": "Installs the syslog service from busybox",
-    "version": "1.0.1"
+    "version": "1.0.2"
 }

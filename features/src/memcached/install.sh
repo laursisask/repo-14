@@ -33,7 +33,7 @@ if [ "${ENABLED}" = "true" ]; then
             apt-get install -y --no-install-recommends ${PACKAGES}
             apt-get clean
             rm -rf /var/lib/apt/lists/*
-            update-rc.d memcached remove
+            update-rc.d -f memcached remove
             RUN_AS="memcache"
         ;;
 
