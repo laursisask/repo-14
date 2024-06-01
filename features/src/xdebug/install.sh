@@ -74,6 +74,7 @@ SUFFIX=
 
 case "${ID_LIKE}" in
     debian)
+        export DEBIAN_FRONTEND=noninteractive
         apt-get update
         case "${PHP_VERSION}" in
             8.1)

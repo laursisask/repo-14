@@ -37,6 +37,7 @@ fi
 
 case "${ID_LIKE}" in
     "debian")
+        export DEBIAN_FRONTEND=noninteractive
         PACKAGES="mariadb-client mariadb-server"
         if ! hash envsubst >/dev/null 2>&1; then
             PACKAGES="${PACKAGES} gettext"
@@ -44,7 +45,7 @@ case "${ID_LIKE}" in
 
         apt-get update
         # shellcheck disable=SC2086
-        DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ${PACKAGES}
+        apt-get install -y --no-install-recommends ${PACKAGES}
         apt-get clean
         rm -rf /var/lib/apt/lists/*
         update-rc.d -f mariadb remove

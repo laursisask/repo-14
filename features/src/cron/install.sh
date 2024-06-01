@@ -21,6 +21,7 @@ if [ "${ENABLED:-}" = 'true' ]; then
 
     case "${ID_LIKE}" in
         "debian")
+            export DEBIAN_FRONTEND=noninteractive
             # In Ubuntu Noble, cron now depends on systemd. We need to install busybox-static and use it as crond/crontab to avoid garbage in the system.
             PACKAGES_NOREMOVE=""
             PACKAGES=""

@@ -27,6 +27,7 @@ if [ "${ENABLED}" = "true" ]; then
 
         case "${ID_LIKE}" in
             "debian")
+                export DEBIAN_FRONTEND=noninteractive
                 PACKAGES=""
 
                 if ! hash curl >/dev/null 2>&1; then

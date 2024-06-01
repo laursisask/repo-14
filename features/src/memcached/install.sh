@@ -23,6 +23,7 @@ if [ "${ENABLED}" = "true" ]; then
 
     case "${ID_LIKE}" in
         "debian")
+            export DEBIAN_FRONTEND=noninteractive
             PACKAGES="memcached"
             if ! hash envsubst >/dev/null 2>&1; then
                 PACKAGES="${PACKAGES} gettext"
