@@ -36,6 +36,7 @@ jobs:
           - mariadb
           - mc
           - memcached
+          - nginx
           - ssh
           - su-exec
           - vip-cli
@@ -63,6 +64,7 @@ jobs:
           - feature: mailpit
           - feature: memcached
           - feature: mariadb
+          - feature: nginx
           - feature: php
             filter: php81
           - feature: php
