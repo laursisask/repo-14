@@ -53,6 +53,10 @@ case "${ID_LIKE}" in
 
         if [ "${INSTALLDATABASETOWORKSPACES}" = 'true' ]; then
             mv /var/lib/mysql/debian-*.flag "${MARIADB_DATADIR}"
+        else
+            # The init script will recreate the database with the correct authentication method
+            rm -rf /var/lib/mysql/mysql
+            rm -f /var/lib/mysql/aria_log* /var/lib/mysql/ib*
         fi
     ;;
 
