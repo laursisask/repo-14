@@ -150,6 +150,7 @@ else
 fi
 
 if [ ! -f "${HOME}/.local/share/vip-codespaces/login/010-wplogin.sh" ]; then
+    install -D -d -m 0755 -o "${MY_UID}" -g "${MY_GID}" "${HOME}/.local/share/vip-codespaces/login"
     export WP_URL="${wp_url}"
     # shellcheck disable=SC2016
     envsubst '$WP_URL' < /usr/share/wordpress/010-wplogin.tpl > "${HOME}/.local/share/vip-codespaces/login/010-wplogin.sh"
