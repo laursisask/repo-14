@@ -1,0 +1,63 @@
+{
+    "alpine-base": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "base": {},
+            "nginx": {},
+            "php": {
+                "composer": false
+            },
+            "mariadb": {},
+            "phpmyadmin": {
+                "enabled": true
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./base",
+            "./nginx",
+            "./php",
+            "./mariadb",
+            "./phpmyadmin"
+        ]
+    },
+    "ubuntu-base": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "base": {},
+            "nginx": {},
+            "php": {
+                "composer": false
+            },
+            "mariadb": {},
+            "phpmyadmin": {
+                "enabled": true
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./base",
+            "./nginx",
+            "./php",
+            "./mariadb",
+            "./phpmyadmin"
+        ]
+    },
+    "debian-latest": {
+        "image": "debian:latest",
+        "features": {
+            "php": {
+                "composer": false
+            },
+            "mariadb": {},
+            "phpmyadmin": {
+                "enabled": true
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./mariadb",
+            "./phpmyadmin"
+        ]
+    }
+}

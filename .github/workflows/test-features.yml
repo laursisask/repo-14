@@ -71,6 +71,7 @@ jobs:
             filter: php82
           - feature: php
             filter: php83
+          - feature: phpmyadmin
           - feature: ssh
           - feature: xdebug
     steps:
