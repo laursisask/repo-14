@@ -65,6 +65,7 @@ jobs:
           - feature: memcached
           - feature: mariadb
           - feature: nginx
+          - feature: photon
           - feature: php
             filter: php81
           - feature: php
