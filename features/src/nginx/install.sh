@@ -11,7 +11,7 @@ fi
 
 echo '(*) Installing nginx...'
 
-: "${MEDIAREDIRECTURL:=}"
+MEDIA_REDIRECT_URL="${MEDIAREDIRECTURL:-}"
 
 # shellcheck source=/dev/null
 . /etc/os-release
