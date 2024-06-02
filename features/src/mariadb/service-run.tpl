@@ -3,11 +3,6 @@
 set -eu
 exec 2>&1
 
-if [ -f /etc/conf.d/mariadb ]; then
-    # shellcheck source=/dev/null
-    . /etc/conf.d/mariadb
-fi
-
 # shellcheck disable=SC2154
 install -d -D -m 02755 -o "${MARIADB_USER}" -g "${MARIADB_USER}" "${MARIADB_DATADIR}"
 chown -R "${MARIADB_USER}:${MARIADB_USER}" "${MARIADB_DATADIR}"
