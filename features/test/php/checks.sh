@@ -15,3 +15,9 @@ check "Port 1025 is open" sh -c 'netstat -lnt | grep :1025 '
 check "Port 8025 is open" sh -c 'netstat -lnt | grep :8025 '
 
 check "VIP CLI can run" vip --version
+
+# Microsoft's base images contain zsh. We don't want to run this check for MS images because we have no control over the installed services.
+if test -d /etc/rc2.d && ! test -e /usr/bin/zsh; then
+    dir="$(ls -1 /etc/rc2.d)"
+    check "/etc/rc2.d is empty" test -z "${dir}"
+fi

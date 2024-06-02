@@ -17,3 +17,9 @@ done
 pass="$(cat /etc/conf.d/phpmyadmin-password)"
 check "Basic Auth is required" sh -c "curl -s -w '%{response_code}' http://localhost:81 | grep -F 401"
 check "phpMyAdmin works" sh -c "curl -s -w '%{response_code}' -u \"vipgo:${pass}\" http://localhost:81 | grep -F 200"
+
+# Microsoft's base images contain zsh. We don't want to run this check for MS images because we have no control over the installed services.
+if test -d /etc/rc2.d && ! test -e /usr/bin/zsh; then
+    dir="$(ls -1 /etc/rc2.d)"
+    check "/etc/rc2.d is empty" test -z "${dir}"
+fi

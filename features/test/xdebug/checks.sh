@@ -15,3 +15,9 @@ check "xdebug.mode is trace,profile (fpm)" sh -c 'php-fpm -i | grep -E "^xdebug\
 sudo xdebug-set-mode off
 check "xdebug.mode is off (cli)" sh -c 'php -i | grep -E "^xdebug\.mode => off => off"'
 check "xdebug.mode is off (fpm)" sh -c 'php-fpm -i | grep -E "^xdebug\.mode => off => off"'
+
+# Microsoft's base images contain zsh. We don't want to run this check for MS images because we have no control over the installed services.
+if test -d /etc/rc2.d && ! test -e /usr/bin/zsh; then
+    dir="$(ls -1 /etc/rc2.d)"
+    check "/etc/rc2.d is empty" test -z "${dir}"
+fi

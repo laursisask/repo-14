@@ -48,3 +48,9 @@ content_length="$(curl -s -w '%{size_download}' -H 'Accept: image/webp' http://l
 echo "${content_type} ${content_length}"
 check "600x400.png (as webp); returned as a WEBP" test "${content_type}" = 'image/webp'
 check "600x400.png (as webp); content length is less than file size" test "${content_length}" -lt "${file_size}"
+
+# Microsoft's base images contain zsh. We don't want to run this check for MS images because we have no control over the installed services.
+if test -d /etc/rc2.d && ! test -e /usr/bin/zsh; then
+    dir="$(ls -1 /etc/rc2.d)"
+    check "/etc/rc2.d is empty" test -z "${dir}"
+fi
