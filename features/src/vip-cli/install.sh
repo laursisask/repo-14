@@ -63,7 +63,7 @@ if [ "${ENABLED}" = "true" ]; then
         esac
     fi
 
-    npm i -g "@automattic/vip@${VIP_CLI_VERSION+}"
+    npm i -g "@automattic/vip@${VIP_CLI_VERSION}"
 
     install -D -m 0755 -o root -g root vip-sync-db.sh /usr/local/bin/vip-sync-db
 
