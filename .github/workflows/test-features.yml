@@ -40,6 +40,7 @@ jobs:
           - ssh
           - su-exec
           - vip-cli
+          - vip-go-mu-plugins
           - wp-cli
     steps:
       - name: Checkout repository
