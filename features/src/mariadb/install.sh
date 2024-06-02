@@ -49,6 +49,7 @@ case "${ID_LIKE}" in
         apt-get clean
         rm -rf /var/lib/apt/lists/*
         update-rc.d -f mariadb remove
+        update-rc.d -f rsync remove
 
         if [ "${INSTALLDATABASETOWORKSPACES}" = 'true' ]; then
             mv /var/lib/mysql/debian-*.flag "${MARIADB_DATADIR}"
