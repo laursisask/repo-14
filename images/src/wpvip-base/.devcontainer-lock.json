@@ -1,9 +1,9 @@
 {
   "features": {
     "ghcr.io/automattic/vip-codespaces/wp-cli:1": {
-      "version": "1.1.2",
-      "resolved": "ghcr.io/automattic/vip-codespaces/wp-cli@sha256:260f25997adada6498a12ba35a1314bbce553ef3a3f8df14c7edbea53bc1a963",
-      "integrity": "sha256:260f25997adada6498a12ba35a1314bbce553ef3a3f8df14c7edbea53bc1a963"
+      "version": "1.1.3",
+      "resolved": "ghcr.io/automattic/vip-codespaces/wp-cli@sha256:53d86865b61f6448fa76ff1dfcfd304ff79c6836efe63e685a30263442a5f898",
+      "integrity": "sha256:53d86865b61f6448fa76ff1dfcfd304ff79c6836efe63e685a30263442a5f898"
     },
     "ghcr.io/devcontainers-contrib/features/composer:1": {
       "version": "1.0.0",
