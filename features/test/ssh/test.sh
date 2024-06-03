@@ -3,7 +3,13 @@
 # shellcheck source=/dev/null
 source dev-container-features-test-lib
 
-check "wp-cli exists" test -x /usr/local/bin/wp
+check "sshd exists" which sshd
+check "/etc/sv/openssh/run exists and is executable" test -x /etc/sv/openssh/run
+check "/etc/service/openssh is a symlink" test -L /etc/service/openssh
+
+if [[ "$(id -u || true)" -eq 0 ]]; then
+    check "/etc/ssh/sshd_config.d/permit_root_login.conf exists" test -f /etc/ssh/sshd_config.d/permit_root_login.conf
+fi
 
 # Microsoft's base images contain zsh. We don't want to run this check for MS images because we have no control over the installed services.
 if test -d /etc/rc2.d && ! test -e /usr/bin/zsh; then

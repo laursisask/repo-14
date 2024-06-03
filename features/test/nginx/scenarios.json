@@ -1,0 +1,22 @@
+{
+    "alpine-base": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "nginx": {},
+            "php": {
+                "composer": false
+            }
+        }
+    },
+    "ubuntu-base": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "nginx": {},
+            "php": {
+                "composer": false
+            }
+        }
+    }
+}
