@@ -60,7 +60,7 @@ if [ "${ENABLED}" = "true" ]; then
             # Elastcsearch's Dockerfile says ES need netcat
             # https://github.com/elastic/dockerfiles/blob/15cf539642c8466777c84a3dd969e9678f31605c/elasticsearch/Dockerfile#L90
             if ! hash nc >/dev/null 2>&1; then
-                PACKAGES="${PACKAGES} netcat"
+                PACKAGES="${PACKAGES} netcat-openbsd"
             fi
 
             if [ -n "${PACKAGES}" ]; then
