@@ -1,0 +1,50 @@
+{
+    "alpine-base-nopersist-7": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+        },
+        "features": {
+            "elasticsearch": {
+                "version": "7.17.21"
+            }
+        }
+    },
+    "alpine-base-nopersist-8": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+        },
+        "features": {
+            "elasticsearch": {
+                "version": "8.13.4"
+            }
+        }
+    },
+    "ubuntu-base-nopersist-7": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+        },
+        "features": {
+            "elasticsearch": {
+                "version": "7.17.21"
+            }
+        }
+    },
+    "ubuntu-base-nopersist-8": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "containerEnv": {
+            "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+        },
+        "features": {
+            "elasticsearch": {
+                "version": "8.13.4"
+            }
+        }
+    }
+}
