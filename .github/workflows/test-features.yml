@@ -123,9 +123,12 @@ jobs:
       fail-fast: false
       matrix:
         test:
-          - php81
-          - php82
-          - php83
+          - php81-alpine-base
+          - php82-alpine-base
+          - php83-alpine-base
+          - php81-ubuntu-base
+          - php82-ubuntu-base
+          - php83-ubuntu-base
     steps:
       - name: Checkout repository
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
@@ -139,9 +142,15 @@ jobs:
       - name: Build images
         run: |
           REPO="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
+          IMAGE=
+          if [ "${{ contains(matrix.test, 'alpine') }}" = "true" ]; then
+            IMAGE=alpine-base
+          elif [ "${{ contains(matrix.test, 'ubuntu') }}" = "true" ]; then
+            IMAGE=ubuntu-base
+          fi
           devcontainer build \
-            --workspace-folder images/src/alpine-base \
-            --image-name="ghcr.io/${REPO}/alpine-base:latest" \
+            --workspace-folder "images/src/${IMAGE}" \
+            --image-name="ghcr.io/${REPO}/${IMAGE}:latest" \
             --cache-from type=gha
 
       - name: Run tests
