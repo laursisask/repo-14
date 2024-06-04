@@ -1,16 +1,11 @@
 # zeta_flutter_template
 
-A new Flutter project.
+Template for Flutter apps using [zeta_flutter package](https://pub.dev/packages/zeta_flutter).
 
-## Getting Started
+## Contributing
 
-This project is a starting point for a Flutter application.
+This project welcomes contributions. Please check out our [Contributing guide](./CONTRIBUTING.md) to learn more on how to get started.
 
-A few resources to get you started if this is your first Flutter project:
+## License
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[MIT](./LICENSE)

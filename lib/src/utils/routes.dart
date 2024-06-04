@@ -14,25 +14,28 @@ final goRouter = GoRouter(
         return LayoutBuilder(
           builder: (context, constraints) {
             final showBottomBar = constraints.maxWidth < 479;
-            return Scaffold(
-              appBar: ZetaTopAppBar(
-                title: const Text('My App'),
-                leading: IconButton(
-                  icon: const Icon(ZetaIcons.hamburger_menu_round),
-                  onPressed: () {},
+
+            final body = CustomScrollView(
+              slivers: [
+                ZetaTopAppBar.extended(
+                  title: const Text('My App'),
+                  actions: [
+                    const Text('Dark Mode: '),
+                    ZetaSwitch(
+                      value: Zeta.of(context).brightness == Brightness.dark,
+                      onChanged: (x) {
+                        if (x != null) ZetaProvider.of(context).updateThemeMode(x ? ThemeMode.dark : ThemeMode.light);
+                      },
+                    ),
+                  ],
                 ),
-                actions: [
-                  const Text('Dark Mode: '),
-                  ZetaSwitch(
-                    value: Zeta.of(context).brightness == Brightness.dark,
-                    onChanged: (x) {
-                      if (x != null) ZetaProvider.of(context).updateThemeMode(x ? ThemeMode.dark : ThemeMode.light);
-                    },
-                  ),
-                ],
-              ),
+                SliverToBoxAdapter(child: navigationShell),
+              ],
+            );
+
+            return Scaffold(
               body: showBottomBar
-                  ? navigationShell
+                  ? body
                   : Row(
                       children: [
                         ZetaNavigationRail(
@@ -43,7 +46,7 @@ final goRouter = GoRouter(
                             ZetaNavigationRailItem(label: 'Example', icon: Icon(ZetaIcons.star_round)),
                           ],
                         ),
-                        Expanded(child: navigationShell),
+                        Expanded(child: body),
                       ],
                     ),
               bottomNavigationBar: showBottomBar
