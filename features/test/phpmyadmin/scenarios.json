@@ -44,7 +44,7 @@
         ]
     },
     "debian-latest": {
-        "image": "debian:latest",
+        "image": "debian:bookworm-slim",
         "features": {
             "php": {
                 "composer": false

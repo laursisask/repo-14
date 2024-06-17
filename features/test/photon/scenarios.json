@@ -38,7 +38,7 @@
         ]
     },
     "debian-latest": {
-        "image": "debian:latest",
+        "image": "debian:bookworm-slim",
         "features": {
             "photon": {
                 "enabled": true
