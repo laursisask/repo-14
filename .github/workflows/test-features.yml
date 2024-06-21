@@ -66,6 +66,7 @@ jobs:
       matrix:
         test:
           - feature: cron
+          - feature: cron-control-runner
           - feature: elasticsearch
           - feature: mailpit
           - feature: memcached
