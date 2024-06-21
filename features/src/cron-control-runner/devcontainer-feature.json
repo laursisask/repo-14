@@ -1,6 +1,7 @@
 {
     "id": "cron-control-runner",
-    "version": "1.0.0",
+    "name": "Cron Control Runner",
+    "version": "1.0.1",
     "description": "Installs Cron Control Runner into the Dev Environment",
     "options": {
         "enabled": {
@@ -30,6 +31,7 @@
         }
     },
     "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/entrypoints",
         "ghcr.io/automattic/vip-codespaces/wp-cli"
     ]
 }
