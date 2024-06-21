@@ -1,5 +1,5 @@
 
-# cron-control-runner
+# Cron Control Runner (cron-control-runner)
 
 Installs Cron Control Runner into the Dev Environment
 
