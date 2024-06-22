@@ -18,6 +18,7 @@ Enables cron in the Dev Environment
 | enabled | Enable cron | boolean | true |
 | run_wp_cron | Run wp-cron.php from cron | boolean | false |
 | wp_cron_schedule | Interval for wp-cron.php | string | */15 * * * * |
+| install-runit-service | Whether to install a runit service for cron | boolean | true |
 
 
 
