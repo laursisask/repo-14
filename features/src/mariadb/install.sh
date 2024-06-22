@@ -13,6 +13,7 @@ echo '(*) Installing MariaDB...'
 
 : "${_REMOTE_USER:?"_REMOTE_USER is required"}"
 : "${INSTALLDATABASETOWORKSPACES:=}"
+: "${INSTALL_RUNIT_SERVICE:=true}"
 
 if [ "${_REMOTE_USER}" = "root" ]; then
     MARIADB_USER=mysql
@@ -34,6 +35,7 @@ fi
 . /etc/os-release
 : "${ID:=}"
 : "${ID_LIKE:=${ID}}"
+ENTRYPOINT=""
 
 case "${ID_LIKE}" in
     "debian")
@@ -58,6 +60,8 @@ case "${ID_LIKE}" in
             rm -rf /var/lib/mysql/mysql
             rm -f /var/lib/mysql/aria_log* /var/lib/mysql/ib*
         fi
+
+        ENTRYPOINT="entrypoint.deb.tpl"
     ;;
 
     "alpine")
@@ -66,8 +70,14 @@ case "${ID_LIKE}" in
             PACKAGES="${PACKAGES} gettext"
         fi
 
+        if [ ! -x /sbin/chpst ] && [ ! -x /sbin/su-exec ]; then
+            PACKAGES="${PACKAGES} su-exec"
+        fi
+
         # shellcheck disable=SC2086
         apk add --no-cache ${PACKAGES}
+
+        ENTRYPOINT="entrypoint.alpine.tpl"
     ;;
 
     *)
@@ -84,9 +94,17 @@ fi
 export MARIADB_USER
 export MARIADB_DATADIR
 
-install -D -d -m 0755 -o root -g root /etc/service /etc/sv/mariadb
-# shellcheck disable=SC2016
-envsubst '$MARIADB_USER $MARIADB_DATADIR' < service-run.tpl > /etc/sv/mariadb/run && chmod 0755 /etc/sv/mariadb/run
-ln -sf /etc/sv/mariadb /etc/service/mariadb
+if [ "${INSTALL_RUNIT_SERVICE}" = 'true' ] && [ -d /etc/sv ]; then
+    install -D -d -m 0755 -o root -g root /etc/service /etc/sv/mariadb
+    # shellcheck disable=SC2016
+    envsubst '$MARIADB_USER $MARIADB_DATADIR' < service-run.tpl > /etc/sv/mariadb/run && chmod 0755 /etc/sv/mariadb/run
+    ln -sf /etc/sv/mariadb /etc/service/mariadb
+fi
+
+if [ -d /var/lib/entrypoint.d ]; then
+    # shellcheck disable=SC2016
+    envsubst '$MARIADB_USER $MARIADB_DATADIR' < "${ENTRYPOINT}" > /var/lib/entrypoint.d/50-mariadb
+    chmod 0755 /var/lib/entrypoint.d/50-mariadb
+fi
 
 echo 'Done!'

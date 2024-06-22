@@ -15,10 +15,13 @@ if [ ! -d "${MARIADB_DATADIR}/mysql" ]; then
     mysql_install_db --auth-root-authentication-method=normal --skip-test-db --user="${MARIADB_USER}" --datadir="${MARIADB_DATADIR}"
 fi
 
-exec chpst -u "${MARIADB_USER}:${MARIADB_USER}" \
+MY_UID="$(id -u "${MARIADB_USER}")"
+MY_GID="$(id -g "${MARIADB_USER}")"
+
+exec setpriv --reuid="${MY_UID}" --regid="${MY_GID}" --inh-caps=-all --init-groups \
     mysqld \
         --datadir="${MARIADB_DATADIR}" \
         --sql-mode=ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION \
         --max_allowed_packet=67M \
         --skip_networking=0 \
-        --bind-address=127.0.0.1
+        --bind-address=127.0.0.1 &

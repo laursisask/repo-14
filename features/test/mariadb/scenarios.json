@@ -67,5 +67,32 @@
                 "installDatabaseToWorkspaces": true
             }
         }
+    },
+
+    "ubuntu-mcr": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "entrypoints": {},
+            "mariadb": {
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./mariadb"
+        ]
+    },
+    "alpine-mcr": {
+        "image": "mcr.microsoft.com/devcontainers/base:alpine",
+        "features": {
+            "entrypoints": {},
+            "mariadb": {
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./mariadb"
+        ]
     }
 }
