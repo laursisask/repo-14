@@ -10,8 +10,10 @@ if [ "$(id -u || true)" -ne 0 ]; then
 fi
 
 : "${_REMOTE_USER:?"_REMOTE_USER is required"}"
+: "${ENABLED:=true}"
+: "${INSTALL_RUNIT_SERVICE:=true}"
 
-if [ "${ENABLED:-}" = 'true' ]; then
+if [ "${ENABLED}" = 'true' ]; then
     echo '(*) Installing cron...'
 
     # shellcheck source=/dev/null
@@ -70,9 +72,15 @@ if [ "${ENABLED:-}" = 'true' ]; then
         ;;
     esac
 
-    install -D -m 0755 -o root -g root service-run /etc/sv/cron/run
-    install -d -m 0755 -o root -g root /etc/service
-    ln -sf /etc/sv/cron /etc/service/cron
+    if [ "${INSTALL_RUNIT_SERVICE}" = 'true' ] && [ -d /etc/sv ]; then
+        install -D -m 0755 -o root -g root service-run /etc/sv/cron/run
+        install -d -m 0755 -o root -g root /etc/service
+        ln -sf /etc/sv/cron /etc/service/cron
+    fi
+
+    if [ -d /var/lib/entrypoint.d ]; then
+        install -m 0755 -o root -g root entrypoint.sh /var/lib/entrypoint.d/50-cron
+    fi
 
     if [ "${RUN_WP_CRON:-}" = 'true' ] && [ -n "${WP_CRON_SCHEDULE:-}" ]; then
         install -m 0755 -o root -g root wp-cron.sh /usr/local/bin/wp-cron.sh
