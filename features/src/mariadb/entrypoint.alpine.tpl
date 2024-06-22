@@ -3,6 +3,8 @@
 set -eu
 exec 2>&1
 
+export LD_PRELOAD=
+
 # shellcheck disable=SC2154
 install -d -D -m 02755 -o "${MARIADB_USER}" -g "${MARIADB_USER}" "${MARIADB_DATADIR}"
 chown -R "${MARIADB_USER}:${MARIADB_USER}" "${MARIADB_DATADIR}"
