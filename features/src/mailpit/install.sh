@@ -11,6 +11,7 @@ fi
 
 : "${_REMOTE_USER:?"_REMOTE_USER is required"}"
 : "${ENABLED:=}"
+: "${INSTALL_RUNIT_SERVICE:=true}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing Mailpit...'
@@ -22,6 +23,7 @@ if [ "${ENABLED}" = "true" ]; then
     : "${ID_LIKE:=${ID}}"
     PHP_INI_DIR=
     NEED_ENMOD=
+    ENTRYPOINT=""
 
     case "${ID_LIKE}" in
         "debian")
@@ -52,6 +54,8 @@ if [ "${ENABLED}" = "true" ]; then
                 PHP_INI_DIR="/etc/php/$(php -r 'echo PHP_MAJOR_VERSION, ".", PHP_MINOR_VERSION;')/mods-available"
                 NEED_ENMOD=1
             fi
+
+            ENTRYPOINT="entrypoint.deb.tpl"
         ;;
 
         "alpine")
@@ -64,6 +68,10 @@ if [ "${ENABLED}" = "true" ]; then
                 PACKAGES="${PACKAGES} gettext"
             fi
 
+            if [ ! -x /sbin/chpst ] && [ ! -x /sbin/su-exec ]; then
+                PACKAGES="${PACKAGES} su-exec"
+            fi
+
             if [ -n "${PACKAGES}" ]; then
                 # shellcheck disable=SC2086
                 apk add --no-cache ${PACKAGES}
@@ -72,6 +80,8 @@ if [ "${ENABLED}" = "true" ]; then
             if hash php >/dev/null 2>&1; then
                 PHP_INI_DIR="/etc/php$(php -r 'echo PHP_MAJOR_VERSION, PHP_MINOR_VERSION;')/conf.d"
             fi
+
+            ENTRYPOINT="entrypoint.alpine.tpl"
         ;;
 
         *)
@@ -106,10 +116,18 @@ if [ "${ENABLED}" = "true" ]; then
         fi
     fi
 
-    install -D -d -m 0755 -o root -g root /etc/service /etc/sv/mailpit
-    # shellcheck disable=SC2016
-    envsubst '$_REMOTE_USER' < service-run.tpl > /etc/sv/mailpit/run && chmod 0755 /etc/sv/mailpit/run
-    ln -sf /etc/sv/mailpit /etc/service/mailpit
+    if [ "${INSTALL_RUNIT_SERVICE}" = 'true' ] && [ -d /etc/sv ]; then
+        install -D -d -m 0755 -o root -g root /etc/service /etc/sv/mailpit
+        # shellcheck disable=SC2016
+        envsubst '$_REMOTE_USER' < service-run.tpl > /etc/sv/mailpit/run && chmod 0755 /etc/sv/mailpit/run
+        ln -sf /etc/sv/mailpit /etc/service/mailpit
+    fi
+
+    if [ -d /var/lib/entrypoint.d ]; then
+        # shellcheck disable=SC2016
+        envsubst '$_REMOTE_USER' < "${ENTRYPOINT}" > /var/lib/entrypoint.d/50-mailpit
+        chmod 0755 /var/lib/entrypoint.d/50-mailpit
+    fi
 
     echo 'Done!'
 fi

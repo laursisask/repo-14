@@ -12,5 +12,31 @@
         "features": {
             "mailpit": {}
         }
+    },
+    "alpine": {
+        "image": "mcr.microsoft.com/devcontainers/base:alpine",
+        "features": {
+            "entrypoints": {},
+            "mailpit": {
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./mailpit"
+        ]
+    },
+    "ubuntu": {
+        "image": "mcr.microsoft.com/devcontainers/base:alpine",
+        "features": {
+            "entrypoints": {},
+            "mailpit": {
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./mailpit"
+        ]
     }
 }

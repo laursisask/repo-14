@@ -1,10 +1,15 @@
 #!/bin/bash
 
-check "mailpit is running" sudo sh -c 'sv status mailpit | grep -E ^run:'
-sudo sv stop mailpit
-check "mailpit is stopped" sudo sh -c 'sv status mailpit | grep -E ^down:'
-sudo sv start mailpit
-check "mailpit is running" sudo sh -c 'sv status mailpit | grep -E ^run:'
+if hash sv >/dev/null 2>&1; then
+    check "mailpit is running" sudo sh -c 'sv status mailpit | grep -E ^run:'
+    sudo sv stop mailpit
+    check "mailpit is stopped" sudo sh -c 'sv status mailpit | grep -E ^down:'
+    sudo sv start mailpit
+    check "mailpit is running" sudo sh -c 'sv status mailpit | grep -E ^run:'
+else
+    check "mailpit is running" pgrep mailpit
+fi
+
 check "Port 1025 is open" sh -c 'netstat -lnt | grep :1025 '
 check "Port 8025 is open" sh -c 'netstat -lnt | grep :8025 '
 
