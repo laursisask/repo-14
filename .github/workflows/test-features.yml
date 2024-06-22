@@ -68,6 +68,13 @@ jobs:
           - feature: cron
           - feature: cron-control-runner
           - feature: elasticsearch
+            filter: alpine-base-persist
+          - feature: elasticsearch
+            filter: alpine-base-nopersist
+          - feature: elasticsearch
+            filter: ubuntu-base-persist
+          - feature: elasticsearch
+            filter: ubuntu-base-nopersist
           - feature: mailpit
           - feature: memcached
           - feature: mariadb
