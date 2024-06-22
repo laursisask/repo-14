@@ -98,5 +98,75 @@
                 "installDataToWorkspaces": true
             }
         }
+    },
+
+    "es-7-mcr-alpine": {
+        "image": "mcr.microsoft.com/devcontainers/base:alpine",
+        "containerEnv": {
+            "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+        },
+        "features": {
+            "entrypoints": {},
+            "elasticsearch": {
+                "version": "7.17.22",
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./elasticsearch"
+        ]
+    },
+    "es-8-mcr-alpine": {
+        "image": "mcr.microsoft.com/devcontainers/base:alpine",
+        "containerEnv": {
+            "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+        },
+        "features": {
+            "entrypoints": {},
+            "elasticsearch": {
+                "version": "8.14.1",
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./elasticsearch"
+        ]
+    },
+
+    "es-7-mcr-ubuntu": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "containerEnv": {
+            "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+        },
+        "features": {
+            "entrypoints": {},
+            "elasticsearch": {
+                "version": "7.17.22",
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./elasticsearch"
+        ]
+    },
+    "es-8-mcr-ubuntu": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "containerEnv": {
+            "ES_JAVA_OPTS": "-Xms512m -Xmx512m"
+        },
+        "features": {
+            "entrypoints": {},
+            "elasticsearch": {
+                "version": "8.14.1",
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./elasticsearch"
+        ]
     }
 }
