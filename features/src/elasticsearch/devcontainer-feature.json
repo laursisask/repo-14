@@ -2,7 +2,7 @@
     "id": "elasticsearch",
     "name": "Elasticsearch",
     "description": "Sets up Elasticsearch into the Dev Environment",
-    "version": "1.1.2",
+    "version": "1.2.0",
     "containerEnv": {
         "ES_TMPDIR": "/usr/share/elasticsearch/tmp"
     },
@@ -22,9 +22,15 @@
             "type": "boolean",
             "default": false,
             "description": "Set Elasticseatch data directory to /workspaces/es-data to persist data between container rebuilds (GHCS)"
+        },
+        "install-runit-service": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to install a runit service for Elasticsearch"
         }
     },
     "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/entrypoints",
         "ghcr.io/automattic/vip-codespaces/wordpress"
     ]
 }

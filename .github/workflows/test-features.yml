@@ -75,6 +75,10 @@ jobs:
             filter: ubuntu-base-persist
           - feature: elasticsearch
             filter: ubuntu-base-nopersist
+          - feature: elasticsearch
+            filter: es-7-mcr
+          - feature: elasticsearch
+            filter: es-8-mcr
           - feature: mailpit
           - feature: memcached
           - feature: mariadb
