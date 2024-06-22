@@ -18,6 +18,7 @@ Sets up Elasticsearch into the Dev Environment
 | enabled | Enable Elasticsearch | boolean | true |
 | version | Elasticsearch version to install | string | 7.17.22 |
 | installDataToWorkspaces | Set Elasticseatch data directory to /workspaces/es-data to persist data between container rebuilds (GHCS) | boolean | false |
+| install-runit-service | Whether to install a runit service for Elasticsearch | boolean | true |
 
 
 
