@@ -12,6 +12,7 @@ fi
 : "${_REMOTE_USER:?"_REMOTE_USER is required"}"
 : "${ENABLED:=}"
 : "${INSTALLDATATOWORKSPACES:?}"
+: "${INSTALL_RUNIT_SERVICE:=true}"
 
 ES_VERSION="${VERSION:-7.17.21}"
 
@@ -30,6 +31,7 @@ if [ "${ENABLED}" = "true" ]; then
     fi
 
     PACKAGES=""
+    ENTRYPOINT=""
     if ! hash curl >/dev/null 2>&1; then
         PACKAGES="${PACKAGES} curl"
     fi
@@ -74,6 +76,8 @@ if [ "${ENABLED}" = "true" ]; then
             if [ "${_REMOTE_USER}" = "root" ]; then
                 adduser --disabled-login --home /usr/share/elasticsearch --no-create-home --gecos '' "${ES_USER}"
             fi
+
+            ENTRYPOINT=entrypoint-deb.tpl
         ;;
 
         "alpine")
@@ -86,12 +90,18 @@ if [ "${ENABLED}" = "true" ]; then
                 PACKAGES="${PACKAGES} bash"
             fi
 
+            if [ ! -x /sbin/chpst ] && [ ! -x /sbin/su-exec ]; then
+                PACKAGES="${PACKAGES} su-exec"
+            fi
+
             # shellcheck disable=SC2086
             apk add --no-cache ${PACKAGES}
 
             if [ "${_REMOTE_USER}" = "root" ]; then
                 adduser -h /usr/share/elasticsearch -s /sbin/nologin -H -D "${ES_USER}"
             fi
+
+            ENTRYPOINT=entrypoint-alpine.tpl
         ;;
 
         *)
@@ -137,10 +147,18 @@ if [ "${ENABLED}" = "true" ]; then
     chown "${ES_USER}:${ES_USER}" /usr/share/elasticsearch/config/elasticsearch.yml
     chmod 0644 /usr/share/elasticsearch/config/elasticsearch.yml
 
-    install -D -d -m 0755 -o root -g root /etc/service /etc/sv/elasticsearch
-    # shellcheck disable=SC2016
-    envsubst '$ES_DATADIR $ES_USER' < service-run.tpl > /etc/sv/elasticsearch/run && chmod 0755 /etc/sv/elasticsearch/run
-    ln -sf /etc/sv/elasticsearch /etc/service/elasticsearch
+    if [ "${INSTALL_RUNIT_SERVICE}" = 'true' ] && [ -d /etc/sv ]; then
+        install -D -d -m 0755 -o root -g root /etc/service /etc/sv/elasticsearch
+        # shellcheck disable=SC2016
+        envsubst '$ES_DATADIR $ES_USER' < service-run.tpl > /etc/sv/elasticsearch/run && chmod 0755 /etc/sv/elasticsearch/run
+        ln -sf /etc/sv/elasticsearch /etc/service/elasticsearch
+    fi
+
+    if [ -d /var/lib/entrypoint.d ]; then
+        # shellcheck disable=SC2016
+        envsubst '$ES_DATADIR $ES_USER' < "${ENTRYPOINT}" > /var/lib/entrypoint.d/50-elasticsearch
+        chmod 0755 /var/lib/entrypoint.d/50-elasticsearch
+    fi
 
     if [ -d /var/lib/wordpress/postinstall.d ]; then
         install -m 0755 -o root -g root post-wp-install.sh /var/lib/wordpress/postinstall.d/50-elasticsearch.sh
