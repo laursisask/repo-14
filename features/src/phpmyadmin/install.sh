@@ -73,8 +73,6 @@ if [ "${ENABLED}" = "true" ]; then
     curl -SL https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz | tar --strip-components=1 -zxm -f - -C /usr/share/webapps/phpmyadmin
 
     LC_ALL=C < /dev/urandom tr -dc _A-Z-a-z-0-9 2> /dev/null | head -c24 > /etc/conf.d/phpmyadmin-password
-    chown "${_REMOTE_USER}:${_REMOTE_USER}" /etc/conf.d/phpmyadmin-password
-    chmod 0600 /etc/conf.d/phpmyadmin-password
     if [ -d /etc/nginx/conf.extra ]; then
         htpasswd -nim vipgo < /etc/conf.d/phpmyadmin-password > /etc/nginx/conf.extra/.htpasswd-pma
         chown "${NGINX_USER}:${NGINX_USER}" /etc/nginx/conf.extra/.htpasswd-pma

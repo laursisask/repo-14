@@ -25,6 +25,7 @@
     },
     "ubuntu-root-persist": {
         "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "remoteUser": "root",
         "overrideCommand": false,
         "features": {
             "mariadb": {
@@ -59,6 +60,7 @@
     },
     "alpine-root-persist": {
         "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "remoteUser": "root",
         "overrideCommand": false,
         "features": {
             "mariadb": {
