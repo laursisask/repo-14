@@ -85,11 +85,11 @@ jobs:
           - feature: nginx
           - feature: photon
           - feature: php
-            filter: php81
+            filter: '81'
           - feature: php
-            filter: php82
+            filter: '82'
           - feature: php
-            filter: php83
+            filter: '83'
           - feature: phpmyadmin
           - feature: ssh
           - feature: xdebug

@@ -13,6 +13,7 @@ fi
 check "Port 9000 is open" sh -c 'netstat -lnt | grep :9000 '
 
 check "php can run" php --version
+check "php-fpm configuration" sudo php-fpm -t
 check "composer can run" composer --version
 
 check "mailpit is running" pgrep mailpit
