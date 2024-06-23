@@ -3,7 +3,11 @@
         "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
         "overrideCommand": false,
         "features": {
-            "php": {},
+            "php": {
+                "composer": false,
+                "lite-install": true,
+                "skip-gmagick": true
+            },
             "mariadb": {},
             "wp-cli": {},
             "wordpress": {},
@@ -21,7 +25,11 @@
         "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
         "overrideCommand": false,
         "features": {
-            "php": {},
+            "php": {
+                "composer": false,
+                "lite-install": true,
+                "skip-gmagick": true
+            },
             "mariadb": {
                 "installDatabaseToWorkspaces": true
             },
@@ -43,7 +51,11 @@
         "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
         "overrideCommand": false,
         "features": {
-            "php": {},
+            "php": {
+                "composer": false,
+                "lite-install": true,
+                "skip-gmagick": true
+            },
             "mariadb": {},
             "wp-cli": {},
             "wordpress": {},
@@ -61,7 +73,11 @@
         "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
         "overrideCommand": false,
         "features": {
-            "php": {},
+            "php": {
+                "composer": false,
+                "lite-install": true,
+                "skip-gmagick": true
+            },
             "mariadb": {
                 "installDatabaseToWorkspaces": true
             },

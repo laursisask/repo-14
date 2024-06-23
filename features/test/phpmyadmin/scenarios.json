@@ -6,7 +6,9 @@
             "base": {},
             "nginx": {},
             "php": {
-                "composer": false
+                "composer": false,
+                "lite-install": true,
+                "skip-gmagick": true
             },
             "mariadb": {},
             "phpmyadmin": {
@@ -28,7 +30,9 @@
             "base": {},
             "nginx": {},
             "php": {
-                "composer": false
+                "composer": false,
+                "lite-install": true,
+                "skip-gmagick": true
             },
             "mariadb": {},
             "phpmyadmin": {
@@ -47,7 +51,9 @@
         "image": "debian:bookworm-slim",
         "features": {
             "php": {
-                "composer": false
+                "composer": false,
+                "lite-install": true,
+                "skip-gmagick": true
             },
             "mariadb": {},
             "phpmyadmin": {
