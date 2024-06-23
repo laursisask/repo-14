@@ -11,6 +11,8 @@ fi
 
 : "${_REMOTE_USER:?"_REMOTE_USER is required"}"
 : "${ENABLED:=}"
+: "${MEMORY_SIZE:=64}"
+: "${INSTALL_RUNIT_SERVICE:=true}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing memcached...'
@@ -60,11 +62,20 @@ if [ "${ENABLED}" = "true" ]; then
     fi
 
     export RUN_AS
+    export MEMORY_SIZE
 
-    install -D -d -m 0755 -o root -g root /etc/service /etc/sv/memcached
-    # shellcheck disable=SC2016
-    envsubst '$RUN_AS' < service-run.tpl > /etc/sv/memcached/run && chmod 0755 /etc/sv/memcached/run
-    ln -sf /etc/sv/memcached /etc/service/memcached
+    if [ "${INSTALL_RUNIT_SERVICE}" = 'true' ] && [ -d /etc/sv ]; then
+        install -D -d -m 0755 -o root -g root /etc/service /etc/sv/memcached
+        # shellcheck disable=SC2016
+        envsubst '$RUN_AS $MEMORY_SIZE' < service-run.tpl > /etc/sv/memcached/run && chmod 0755 /etc/sv/memcached/run
+        ln -sf /etc/sv/memcached /etc/service/memcached
+    fi
+
+    if [ -d /var/lib/entrypoint.d ]; then
+        # shellcheck disable=SC2016
+        envsubst '$RUN_AS $MEMORY_SIZE' < entrypoint.tpl > /var/lib/entrypoint.d/50-memcached
+        chmod 0755 /var/lib/entrypoint.d/50-memcached
+    fi
 
     echo 'Done!'
 fi
