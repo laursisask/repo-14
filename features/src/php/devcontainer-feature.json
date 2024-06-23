@@ -2,7 +2,7 @@
     "id": "php",
     "name": "PHP",
     "description": "Installs PHP into the Dev Environment",
-    "version": "2.4.3",
+    "version": "2.5.0",
     "options": {
         "version": {
             "type": "string",
@@ -14,6 +14,21 @@
             "type": "boolean",
             "default": true,
             "description": "Whether to install Composer"
+        },
+        "install-runit-service": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to install a runit service for Mailpit"
+        },
+        "lite-install": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to install a minimal set of PHP extensions"
+        },
+        "skip-gmagick": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to skip installing the gmagick extension"
         }
     },
     "customizations": {

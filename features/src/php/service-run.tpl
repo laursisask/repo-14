@@ -3,7 +3,8 @@
 set -eu
 exec 2>&1
 
-PHP_USER="${CONTAINER_USER:-www-data}"
+# shellcheck disable=SC2154
+PHP_USER="${_REMOTE_USER}"
 
 touch /var/log/php-fpm/php-fpm.log
 chown "root:${PHP_USER}" /var/log/php-fpm/php-fpm.log
