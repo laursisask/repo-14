@@ -5,7 +5,8 @@
         "features": {
             "nginx": {},
             "php": {
-                "composer": false
+                "composer": false,
+                "lite-install": true
             },
             "photon": {
                 "enabled": true,
@@ -24,7 +25,8 @@
         "features": {
             "nginx": {},
             "php": {
-                "composer": false
+                "composer": false,
+                "lite-install": true
             },
             "photon": {
                 "enabled": true,
@@ -53,7 +55,8 @@
                 "mediaRedirectURL": "http://local.invalid"
             },
             "php": {
-                "composer": false
+                "composer": false,
+                "lite-install": true
             },
             "photon": {
                 "enabled": true,
