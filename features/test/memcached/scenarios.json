@@ -12,5 +12,31 @@
         "features": {
             "memcached": {}
         }
+    },
+    "ubuntu-mcr": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "entrypoints": {},
+            "memcached": {
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./memcached"
+        ]
+    },
+    "alpine-mcr": {
+        "image": "mcr.microsoft.com/devcontainers/base:alpine",
+        "features": {
+            "entrypoints": {},
+            "memcached": {
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./memcached"
+        ]
     }
 }
