@@ -4,20 +4,30 @@ set -e
 
 PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
 
+if [ "$(id -u || true)" -ne 0 ]; then
+    echo 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
+    exit 1
+fi
+
+: "${_REMOTE_USER:?"_REMOTE_USER is required"}"
+: "${VERSION:?}"
+: "${COMPOSER:=}"
+PHP_VERSION="${VERSION}"
+: "${INSTALL_RUNIT_SERVICE:=true}"
+: "${LITE_INSTALL:=}"
+: "${SKIP_GMAGICK:=}"
+
 setup_php81_alpine() {
-    alpine_version="$(cat /etc/alpine-release)"
-    if [ "$(printf '%s\n' "3.20" "${alpine_version}" | sort -V | head -n1 || true)" = "3.20" ]; then
-        REPOS="-X https://dl-cdn.alpinelinux.org/alpine/v3.19/main -X https://dl-cdn.alpinelinux.org/alpine/v3.19/community"
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        EXTENSIONS="icu-data-full ghostscript php81-bcmath php81-intl php81-pecl-mcrypt php81-soap php81-pecl-igbinary php81-pecl-ssh2 php81-pecl-timezonedb"
     else
-        REPOS=""
+        EXTENSIONS=
     fi
 
     # shellcheck disable=SC2086 # We need to expand $REPOS
     apk add --no-cache \
-        icu-data-full ghostscript \
         php81 php81-fpm php81-pear \
         php81-pecl-apcu \
-        php81-bcmath \
         php81-calendar \
         php81-ctype \
         php81-curl \
@@ -28,11 +38,8 @@ setup_php81_alpine() {
         php81-gd \
         php81-gmp \
         php81-iconv \
-        php81-intl \
         php81-json \
         php81-mbstring \
-        php81-pecl-igbinary \
-        php81-pecl-mcrypt \
         php81-pecl-memcache \
         php81-pecl-memcached \
         php81-mysqli \
@@ -48,27 +55,24 @@ setup_php81_alpine() {
         php81-session \
         php81-shmop \
         php81-simplexml \
-        php81-soap \
         php81-sockets \
         php81-sodium \
         php81-sqlite3 \
-        php81-pecl-ssh2 \
         php81-sysvsem \
         php81-sysvshm \
-        php81-pecl-timezonedb \
         php81-tokenizer \
         php81-xml \
         php81-xmlreader \
         php81-xmlwriter \
-        php81-zip ${REPOS}
+        php81-zip ${EXTENSIONS} -X https://dl-cdn.alpinelinux.org/alpine/v3.19/main -X https://dl-cdn.alpinelinux.org/alpine/v3.19/community
 
-    # shellcheck disable=SC2086 # We need to expand $REPOS
-    apk add --no-cache php81-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp ${REPOS}
-    pecl81 channel-update pecl.php.net
-    pecl81 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
-    apk del --no-cache php81-dev gcc make libc-dev graphicsmagick-dev libtool
-
-    echo "extension=gmagick.so" > /etc/php81/conf.d/40_gmagick.ini
+    if [ "${SKIP_GMAGICK}" != 'true' ]; then
+        apk add --no-cache php81-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp -X https://dl-cdn.alpinelinux.org/alpine/v3.19/main -X https://dl-cdn.alpinelinux.org/alpine/v3.19/community
+        pecl81 channel-update pecl.php.net
+        pecl81 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
+        apk del --no-cache php81-dev gcc make libc-dev graphicsmagick-dev libtool
+        echo "extension=gmagick.so" > /etc/php81/conf.d/40_gmagick.ini
+    fi
 
     [ ! -f /usr/bin/pear ] && ln -s /usr/bin/pear81 /usr/bin/pear
     [ ! -f /usr/bin/peardev ] && ln -s /usr/bin/peardev81 /usr/bin/peardev
@@ -81,11 +85,16 @@ setup_php81_alpine() {
 }
 
 setup_php82_alpine() {
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        EXTENSIONS="icu-data-full ghostscript php82-bcmath php82-intl php82-pecl-mcrypt php82-soap php82-pecl-igbinary php82-pecl-ssh2 php82-pecl-timezonedb"
+    else
+        EXTENSIONS=
+    fi
+
+    # shellcheck disable=SC2086
     apk add --no-cache \
-        icu-data-full ghostscript \
         php82 php82-fpm php82-pear \
         php82-pecl-apcu \
-        php82-bcmath \
         php82-calendar \
         php82-ctype \
         php82-curl \
@@ -96,13 +105,9 @@ setup_php82_alpine() {
         php82-gd \
         php82-gmp \
         php82-iconv \
-        php82-intl \
         php82-mbstring \
-        php82-pecl-igbinary \
-        php82-pecl-mcrypt \
         php82-pecl-memcache \
         php82-pecl-memcached \
-        php82-pecl-ssh2 \
         php82-mysqli \
         php82-mysqlnd \
         php82-opcache \
@@ -116,25 +121,24 @@ setup_php82_alpine() {
         php82-session \
         php82-shmop \
         php82-simplexml \
-        php82-soap \
         php82-sockets \
         php82-sodium \
         php82-sqlite3 \
         php82-sysvsem \
         php82-sysvshm \
-        php82-pecl-timezonedb \
         php82-tokenizer \
         php82-xml \
         php82-xmlreader \
         php82-xmlwriter \
-        php82-zip
+        php82-zip ${EXTENSIONS}
 
-    apk add --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
-    pecl82 channel-update pecl.php.net
-    pecl82 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
-    apk del --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool
-
-    echo "extension=gmagick.so" > /etc/php82/conf.d/40_gmagick.ini
+    if [ "${SKIP_GMAGICK}" != 'true' ]; then
+        apk add --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
+        pecl82 channel-update pecl.php.net
+        pecl82 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
+        apk del --no-cache php82-dev gcc make libc-dev graphicsmagick-dev libtool
+        echo "extension=gmagick.so" > /etc/php82/conf.d/40_gmagick.ini
+    fi
 
     [ ! -f /usr/bin/pear ] && ln -s /usr/bin/pear82 /usr/bin/pear
     [ ! -f /usr/bin/peardev ] && ln -s /usr/bin/peardev82 /usr/bin/peardev
@@ -147,11 +151,16 @@ setup_php82_alpine() {
 }
 
 setup_php83_alpine() {
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        EXTENSIONS="icu-data-full ghostscript php83-bcmath php83-ftp php83-intl php83-pecl-mcrypt php83-soap php83-pecl-igbinary php83-pecl-ssh2 php83-pecl-timezonedb"
+    else
+        EXTENSIONS=
+    fi
+
     apk add --no-cache \
         icu-data-full ghostscript \
         php83 php83-fpm php83-pear \
         php83-pecl-apcu \
-        php83-bcmath \
         php83-calendar \
         php83-ctype \
         php83-curl \
@@ -162,12 +171,9 @@ setup_php83_alpine() {
         php83-gd \
         php83-gmp \
         php83-iconv \
-        php83-intl \
         php83-mbstring \
-        php83-pecl-igbinary \
         php83-pecl-memcache \
         php83-pecl-memcached \
-        php83-pecl-ssh2 \
         php83-mysqli \
         php83-mysqlnd \
         php83-opcache \
@@ -181,7 +187,6 @@ setup_php83_alpine() {
         php83-session \
         php83-shmop \
         php83-simplexml \
-        php83-soap \
         php83-sockets \
         php83-sodium \
         php83-sqlite3 \
@@ -193,22 +198,16 @@ setup_php83_alpine() {
         php83-xmlwriter \
         php83-zip
 
-    apk add --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
-    pecl83 channel-update pecl.php.net
-    pecl83 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
-    echo "extension=gmagick.so" > /etc/php83/conf.d/40_gmagick.ini
-
-    alpine_version="$(cat /etc/alpine-release)"
-    if [ "$(printf '%s\n' "3.20" "${alpine_version}" | sort -V | head -n1 || true)" = "3.20" ]; then
-        apk add --no-cache php83-pecl-mcrypt php83-pecl-timezonedb
-        # Alpine 3.20.0: these symlinks are broken
-        rm -f /usr/bin/phar /usr/bin/phar.phar
-    else
-        pecl83 install timezonedb < /dev/null || true
-        echo "extension=timezonedb.so" > /etc/php83/conf.d/40_timezonedb.ini
+    if [ "${SKIP_GMAGICK}" != 'true' ]; then
+        apk add --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool graphicsmagick libgomp
+        pecl83 channel-update pecl.php.net
+        pecl83 install channel://pecl.php.net/gmagick-2.0.6RC1 < /dev/null || true
+        echo "extension=gmagick.so" > /etc/php83/conf.d/40_gmagick.ini
+        apk del --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool
     fi
 
-    apk del --no-cache php83-dev gcc make libc-dev graphicsmagick-dev libtool
+    # Alpine 3.20: these symlinks are broken
+    rm -f /usr/bin/phar /usr/bin/phar.phar
 
     [ ! -f /usr/bin/pear ] && ln -s /usr/bin/pear83 /usr/bin/pear
     [ ! -f /usr/bin/peardev ] && ln -s /usr/bin/peardev83 /usr/bin/peardev
@@ -221,101 +220,127 @@ setup_php83_alpine() {
 }
 
 setup_php81_deb() {
-    eatmydata apt-get install -y --no-install-recommends ghostscript
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        EXTENSIONS="ghostscript php8.1-bcmath php8.1-gnupg php8.1-igbinary php8.1-intl php8.1-mcrypt php8.1-soap php8.1-ssh2"
+    else
+        EXTENSIONS=
+    fi
+
+    if [ "${SKIP_GMAGICK}" != 'true' ]; then
+        EXTENSIONS="${EXTENSIONS} php8.1-gmagick"
+    fi
+
+    # shellcheck disable=SC2086
     eatmydata apt-get install -y --no-install-recommends \
         php8.1-cli php8.1-fpm \
-        php8.1-apcu php8.1-bcmath php8.1-curl php8.1-gd php8.1-gmagick php8.1-gmp php8.1-gnupg php8.1-intl php8.1-igbinary php8.1-mbstring php8.1-mcrypt \
-        php8.1-memcache php8.1-memcached php8.1-mysql php8.1-soap php8.1-sqlite3 php8.1-ssh2 php8.1-xml php8.1-zip
+        php8.1-apcu php8.1-curl php8.1-gd php8.1-gmp php8.1-mbstring \
+        php8.1-memcache php8.1-memcached php8.1-mysql php8.1-sqlite3 php8.1-xml php8.1-zip ${EXTENSIONS}
     eatmydata apt-get install -y --no-install-recommends php-pear
     phpdismod ffi gettext readline sysvmsg xsl
 
     ln -s /usr/sbin/php-fpm8.1 /usr/sbin/php-fpm
 
-    PACKAGES="php8.1-dev"
-    if ! hash make >/dev/null 2>&1; then
-        PACKAGES="${PACKAGES} make"
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        PACKAGES="php8.1-dev"
+        if ! hash make >/dev/null 2>&1; then
+            PACKAGES="${PACKAGES} make"
+        fi
+
+        # shellcheck disable=SC2086
+        eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
+        pecl channel-update pecl.php.net
+        pecl install timezonedb < /dev/null
+        echo "extension=timezonedb.so" > /etc/php/8.1/mods-available/timezonedb.ini
+        phpenmod timezonedb
+
+        # shellcheck disable=SC2086
+        eatmydata apt-get remove --purge -y ${PACKAGES}
     fi
-
-    # shellcheck disable=SC2086
-    eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
-    pecl channel-update pecl.php.net
-    pecl install timezonedb < /dev/null
-    echo "extension=timezonedb.so" > /etc/php/8.1/mods-available/timezonedb.ini
-    phpenmod timezonedb
-
-    # shellcheck disable=SC2086
-    eatmydata apt-get remove --purge -y ${PACKAGES}
 
     update-rc.d -f php8.1-fpm remove
 }
 
 setup_php82_deb() {
-    eatmydata apt-get install -y --no-install-recommends ghostscript
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        EXTENSIONS="ghostscript php8.2-bcmath php8.2-gnupg php8.2-igbinary php8.2-intl php8.2-mcrypt php8.2-soap php8.2-ssh2"
+    else
+        EXTENSIONS=
+    fi
+
+    if [ "${SKIP_GMAGICK}" != 'true' ]; then
+        EXTENSIONS="${EXTENSIONS} php8.2-gmagick"
+    fi
+
+    # shellcheck disable=SC2086
     eatmydata apt-get install -y --no-install-recommends \
         php8.2-cli php8.2-fpm \
-        php8.2-apcu php8.2-bcmath php8.2-curl php8.2-gd php8.2-gmagick php8.2-gmp php8.2-gnupg php8.2-intl php8.2-igbinary php8.2-mbstring php8.2-mcrypt \
-        php8.2-memcache php8.2-memcached php8.2-mysql php8.2-soap php8.2-sqlite3 php8.2-ssh2 php8.2-xml php8.2-zip
+        php8.2-apcu php8.2-curl php8.2-gd php8.2-gmp php8.2-mbstring \
+        php8.2-memcache php8.2-memcached php8.2-mysql php8.2-sqlite3 php8.2-xml php8.2-zip ${EXTENSIONS}
     eatmydata apt-get install -y --no-install-recommends php-pear
     phpdismod ffi gettext readline sysvmsg xsl
 
     ln -s /usr/sbin/php-fpm8.2 /usr/sbin/php-fpm
 
-    PACKAGES="php8.2-dev"
-    if ! hash make >/dev/null 2>&1; then
-        PACKAGES="${PACKAGES} make"
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        PACKAGES="php8.2-dev"
+        if ! hash make >/dev/null 2>&1; then
+            PACKAGES="${PACKAGES} make"
+        fi
+
+        # shellcheck disable=SC2086
+        eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
+        pecl channel-update pecl.php.net
+        pecl install timezonedb < /dev/null
+        echo "extension=timezonedb.so" > /etc/php/8.2/mods-available/timezonedb.ini
+        phpenmod timezonedb
+
+        # shellcheck disable=SC2086
+        eatmydata apt-get remove --purge -y ${PACKAGES}
     fi
-
-    # shellcheck disable=SC2086
-    eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
-    pecl channel-update pecl.php.net
-    pecl install timezonedb < /dev/null
-    echo "extension=timezonedb.so" > /etc/php/8.2/mods-available/timezonedb.ini
-    phpenmod timezonedb
-
-    # shellcheck disable=SC2086
-    eatmydata apt-get remove --purge -y ${PACKAGES}
 
     update-rc.d -f php8.2-fpm remove
 }
 
 setup_php83_deb() {
-    eatmydata apt-get install -y --no-install-recommends ghostscript
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        EXTENSIONS="ghostscript php8.3-bcmath php8.3-gnupg php8.3-igbinary php8.3-intl php8.3-mcrypt php8.3-soap php8.3-ssh2"
+    else
+        EXTENSIONS=
+    fi
+
+    if [ "${SKIP_GMAGICK}" != 'true' ]; then
+        EXTENSIONS="${EXTENSIONS} php8.3-gmagick"
+    fi
+
+    # shellcheck disable=SC2086
     eatmydata apt-get install -y --no-install-recommends \
         php8.3-cli php8.3-fpm \
-        php8.3-apcu php8.3-bcmath php8.3-curl php8.3-gd php8.3-gmagick php8.3-gmp php8.3-gnupg php8.3-igbinary php8.3-intl php8.3-mbstring php8.3-mcrypt \
-        php8.3-memcache php8.3-memcached php8.3-mysql php8.3-soap php8.3-sqlite3 php8.3-ssh2 php8.3-xml php8.3-zip
+        php8.3-apcu php8.3-curl php8.3-gd php8.3-gmp php8.3-mbstring \
+        php8.3-memcache php8.3-memcached php8.3-mysql php8.3-sqlite3 php8.3-xml php8.3-zip ${EXTENSIONS}
     eatmydata apt-get install -y --no-install-recommends php-pear
     phpdismod ffi gettext readline sysvmsg xsl
 
     ln -s /usr/sbin/php-fpm8.3 /usr/sbin/php-fpm
 
-    PACKAGES="php8.3-dev"
-    if ! hash make >/dev/null 2>&1; then
-        PACKAGES="${PACKAGES} make"
+    if [ "${LITE_INSTALL}" != 'true' ]; then
+        PACKAGES="php8.3-dev"
+        if ! hash make >/dev/null 2>&1; then
+            PACKAGES="${PACKAGES} make"
+        fi
+
+        # shellcheck disable=SC2086
+        eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
+        pecl channel-update pecl.php.net
+        pecl install timezonedb < /dev/null
+        echo "extension=timezonedb.so" > /etc/php/8.3/mods-available/timezonedb.ini
+        phpenmod timezonedb
+
+        # shellcheck disable=SC2086
+        eatmydata apt-get remove --purge -y ${PACKAGES}
     fi
-
-    # shellcheck disable=SC2086
-    eatmydata apt-get install -y --no-install-recommends ${PACKAGES}
-    pecl channel-update pecl.php.net
-    pecl install timezonedb < /dev/null
-    echo "extension=timezonedb.so" > /etc/php/8.3/mods-available/timezonedb.ini
-    phpenmod timezonedb
-
-    # shellcheck disable=SC2086
-    eatmydata apt-get remove --purge -y ${PACKAGES}
 
     update-rc.d -f php8.3-fpm remove
 }
-
-if [ "$(id -u || true)" -ne 0 ]; then
-    echo 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
-    exit 1
-fi
-
-: "${_REMOTE_USER:?"_REMOTE_USER is required"}"
-: "${VERSION:?}"
-: "${COMPOSER:=}"
-PHP_VERSION="${VERSION}"
 
 echo "(*) Installing PHP ${PHP_VERSION}..."
 
@@ -475,9 +500,20 @@ pecl update-channels
 rm -rf /tmp/pear ~/.pearrc
 
 install -d -m 0750 -o "${_REMOTE_USER}" -g adm /var/log/php-fpm
-install -D -m 0755 -o root -g root service-run /etc/sv/php-fpm/run
-install -d -m 0755 -o root -g root /etc/service
-ln -sf /etc/sv/php-fpm /etc/service/php-fpm
+
+if [ "${INSTALL_RUNIT_SERVICE}" = 'true' ] && [ -d /etc/sv ]; then
+    install -D -d -m 0755 -o root -g root /etc/service /etc/sv/php-fpm
+    # shellcheck disable=SC2016
+    envsubst '$_REMOTE_USER' < service-run.tpl > /etc/sv/php-fpm/run
+    chmod 0755 /etc/sv/php-fpm/run
+    ln -sf /etc/sv/php-fpm /etc/service/php-fpm
+fi
+
+if [ -d /var/lib/entrypoint.d ]; then
+    # shellcheck disable=SC2016
+    envsubst '$_REMOTE_USER' < entrypoint.tpl > /var/lib/entrypoint.d/50-php-fpm
+    chmod 0755 /var/lib/entrypoint.d/50-php-fpm
+fi
 
 if [ "${COMPOSER}" = "true" ]; then
     curl -SLo composer-setup.php https://getcomposer.org/installer

@@ -19,6 +19,11 @@ done
 
 check "composer version" composer --version
 
+if [[ -d /etc/sv ]]; then
+    check "/etc/sv/php-fpm/run exists and is executable" test -x /etc/sv/php-fpm/run
+    check "/etc/service/php-fpm is a symlink" test -L /etc/service/php-fpm
+fi
+
 # Microsoft's base images contain zsh. We don't want to run this check for MS images because we have no control over the installed services.
 if test -d /etc/rc2.d && ! test -e /usr/bin/zsh; then
     dir="$(ls -1 /etc/rc2.d)"
