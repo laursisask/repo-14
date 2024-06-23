@@ -1,10 +1,15 @@
 #!/bin/bash
 
-check "nginx is running" sudo sh -c 'sv status nginx | grep -E ^run:'
-sudo sv stop nginx
-check "nginx is stopped" sudo sh -c 'sv status nginx | grep -E ^down:'
-sudo sv start nginx
-check "nginx is running" sudo sh -c 'sv status nginx | grep -E ^run:'
+if hash sv >/dev/null 2>&1; then
+    check "nginx is running" sudo sh -c 'sv status nginx | grep -E ^run:'
+    sudo sv stop nginx
+    check "nginx is stopped" sudo sh -c 'sv status nginx | grep -E ^down:'
+    sudo sv start nginx
+    check "nginx is running" sudo sh -c 'sv status nginx | grep -E ^run:'
+else
+    check "nginx is running" pgrep nginx
+fi
+
 check "Port 80 is open" sh -c 'netstat -lnt | grep :80 '
 
 sudo install -d /wp

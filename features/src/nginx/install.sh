@@ -12,6 +12,7 @@ fi
 echo '(*) Installing nginx...'
 
 MEDIA_REDIRECT_URL="${MEDIAREDIRECTURL:-}"
+: "${INSTALL_RUNIT_SERVICE:=true}"
 
 # shellcheck source=/dev/null
 . /etc/os-release
@@ -70,10 +71,18 @@ install -d -D -m 0755 -o root -g root /etc/nginx/conf.extra /etc/conf.d
 
 export NGINX_USER MEDIA_REDIRECT_URL
 
-install -D -d -m 0755 -o root -g root /etc/service /etc/sv/nginx
-# shellcheck disable=SC2016
-envsubst '$NGINX_USER' < service-run.tpl > /etc/sv/nginx/run && chmod 0755 /etc/sv/nginx/run
-ln -sf /etc/sv/nginx /etc/service/nginx
+if [ "${INSTALL_RUNIT_SERVICE}" = 'true' ] && [ -d /etc/sv ]; then
+    install -D -d -m 0755 -o root -g root /etc/service /etc/sv/nginx
+    # shellcheck disable=SC2016
+    envsubst '$NGINX_USER' < service-run.tpl > /etc/sv/nginx/run && chmod 0755 /etc/sv/nginx/run
+    ln -sf /etc/sv/nginx /etc/service/nginx
+fi
+
+if [ -d /var/lib/entrypoint.d ]; then
+    # shellcheck disable=SC2016
+    envsubst '$NGINX_USER' < entrypoint.tpl > /var/lib/entrypoint.d/50-nginx
+    chmod 0755 /var/lib/entrypoint.d/50-nginx
+fi
 
 # shellcheck disable=SC2016
 envsubst '$MEDIA_REDIRECT_URL' < conf-nginx.tpl > /etc/conf.d/nginx
