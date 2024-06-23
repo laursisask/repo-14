@@ -14,6 +14,7 @@ echo '(*) Installing MariaDB...'
 : "${_REMOTE_USER:?"_REMOTE_USER is required"}"
 : "${INSTALLDATABASETOWORKSPACES:=}"
 : "${INSTALL_RUNIT_SERVICE:=true}"
+: "${EXTRA_OPTIONS:=""}"
 
 if [ "${_REMOTE_USER}" = "root" ]; then
     MARIADB_USER=mysql
@@ -93,17 +94,18 @@ fi
 
 export MARIADB_USER
 export MARIADB_DATADIR
+export EXTRA_OPTIONS
 
 if [ "${INSTALL_RUNIT_SERVICE}" = 'true' ] && [ -d /etc/sv ]; then
     install -D -d -m 0755 -o root -g root /etc/service /etc/sv/mariadb
     # shellcheck disable=SC2016
-    envsubst '$MARIADB_USER $MARIADB_DATADIR' < service-run.tpl > /etc/sv/mariadb/run && chmod 0755 /etc/sv/mariadb/run
+    envsubst '$MARIADB_USER $MARIADB_DATADIR $EXTRA_OPTIONS' < service-run.tpl > /etc/sv/mariadb/run && chmod 0755 /etc/sv/mariadb/run
     ln -sf /etc/sv/mariadb /etc/service/mariadb
 fi
 
 if [ -d /var/lib/entrypoint.d ]; then
     # shellcheck disable=SC2016
-    envsubst '$MARIADB_USER $MARIADB_DATADIR' < "${ENTRYPOINT}" > /var/lib/entrypoint.d/50-mariadb
+    envsubst '$MARIADB_USER $MARIADB_DATADIR $EXTRA_OPTIONS' < "${ENTRYPOINT}" > /var/lib/entrypoint.d/50-mariadb
     chmod 0755 /var/lib/entrypoint.d/50-mariadb
 fi
 

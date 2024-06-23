@@ -16,19 +16,21 @@ if [ ! -d "${MARIADB_DATADIR}/mysql" ]; then
 fi
 
 if [ -x /sbin/chpst ]; then
+    # shellcheck disable=SC2086,SC2154 # there could be multiple options in EXTRA_OPTIONS
     exec chpst -u "${MARIADB_USER}:${MARIADB_USER}" \
         mysqld \
             --datadir="${MARIADB_DATADIR}" \
             --sql-mode=ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION \
             --max_allowed_packet=67M \
             --skip_networking=0 \
-            --bind-address=127.0.0.1 &
+            --bind-address=127.0.0.1 ${EXTRA_OPTIONS} &
 else
+    # shellcheck disable=SC2086 # there could be multiple options in EXTRA_OPTIONS
     exec su-exec "${MARIADB_USER}:${MARIADB_USER}" \
         mysqld \
             --datadir="${MARIADB_DATADIR}" \
             --sql-mode=ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION \
             --max_allowed_packet=67M \
             --skip_networking=0 \
-            --bind-address=127.0.0.1 &
+            --bind-address=127.0.0.1 ${EXTRA_OPTIONS} &
 fi
