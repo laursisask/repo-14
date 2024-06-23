@@ -61,6 +61,7 @@
         "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
         "overrideCommand": false,
         "features": {
+            "base": {},
             "php": {
                 "version": "8.1",
                 "composer": true
@@ -70,6 +71,7 @@
             "xdebug": {}
         },
         "overrideFeatureInstallOrder": [
+            "./base",
             "./php",
             "./xdebug",
             "./mailpit",
@@ -80,6 +82,7 @@
         "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
         "overrideCommand": false,
         "features": {
+            "base": {},
             "php": {
                 "version": "8.2",
                 "composer": true
@@ -89,6 +92,7 @@
             "xdebug": {}
         },
         "overrideFeatureInstallOrder": [
+            "./base",
             "./php",
             "./xdebug",
             "./mailpit",
@@ -99,6 +103,7 @@
         "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
         "overrideCommand": false,
         "features": {
+            "base": {},
             "php": {
                 "version": "8.3",
                 "composer": true
@@ -108,6 +113,7 @@
             "xdebug": {}
         },
         "overrideFeatureInstallOrder": [
+            "./base",
             "./php",
             "./xdebug",
             "./mailpit",
@@ -118,11 +124,13 @@
     "ubuntu-81-mcr": {
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
+            "base": {},
+            "entrypoints": {},
             "php": {
                 "version": "8.1",
                 "composer": true,
                 "install-runit-service": false,
-                "lite": true
+                "lite-install": true
             },
             "mailpit": {
                 "install-runit-service": false
@@ -131,6 +139,8 @@
             "xdebug": {}
         },
         "overrideFeatureInstallOrder": [
+            "./base",
+            "./entrypoints",
             "./php",
             "./xdebug",
             "./mailpit",
@@ -138,14 +148,15 @@
         ]
     },
     "ubuntu-82-mcr": {
-        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
-        "overrideCommand": false,
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
+            "base": {},
+            "entrypoints": {},
             "php": {
                 "version": "8.2",
                 "composer": true,
                 "install-runit-service": false,
-                "lite": true
+                "lite-install": true
             },
             "mailpit": {
                 "install-runit-service": false
@@ -154,6 +165,8 @@
             "xdebug": {}
         },
         "overrideFeatureInstallOrder": [
+            "./base",
+            "./entrypoints",
             "./php",
             "./xdebug",
             "./mailpit",
@@ -161,14 +174,15 @@
         ]
     },
     "ubuntu-83-mcr": {
-        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
-        "overrideCommand": false,
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
+            "base": {},
+            "entrypoints": {},
             "php": {
                 "version": "8.3",
                 "composer": true,
                 "install-runit-service": false,
-                "lite": true
+                "lite-install": true
             },
             "mailpit": {
                 "install-runit-service": false
@@ -177,6 +191,8 @@
             "xdebug": {}
         },
         "overrideFeatureInstallOrder": [
+            "./base",
+            "./entrypoints",
             "./php",
             "./xdebug",
             "./mailpit",
@@ -187,11 +203,12 @@
     "alpine-81-mcr": {
         "image": "mcr.microsoft.com/devcontainers/base:alpine",
         "features": {
+            "entrypoints": {},
             "php": {
                 "version": "8.1",
                 "composer": true,
                 "install-runit-service": false,
-                "lite": true,
+                "lite-install": true,
                 "skip-gmagick": true
             },
             "mailpit": {
@@ -201,6 +218,7 @@
             "xdebug": {}
         },
         "overrideFeatureInstallOrder": [
+            "./entrypoints",
             "./php",
             "./xdebug",
             "./mailpit",
@@ -208,14 +226,14 @@
         ]
     },
     "alpine-82-mcr": {
-        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
-        "overrideCommand": false,
+        "image": "mcr.microsoft.com/devcontainers/base:alpine",
         "features": {
+            "entrypoints": {},
             "php": {
                 "version": "8.2",
                 "composer": true,
                 "install-runit-service": false,
-                "lite": true,
+                "lite-install": true,
                 "skip-gmagick": true
             },
             "mailpit": {
@@ -225,6 +243,7 @@
             "xdebug": {}
         },
         "overrideFeatureInstallOrder": [
+            "./entrypoints",
             "./php",
             "./xdebug",
             "./mailpit",
@@ -232,14 +251,14 @@
         ]
     },
     "alpine-83-mcr": {
-        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
-        "overrideCommand": false,
+        "image": "mcr.microsoft.com/devcontainers/base:alpine",
         "features": {
+            "entrypoints": {},
             "php": {
                 "version": "8.3",
                 "composer": true,
                 "install-runit-service": false,
-                "lite": true,
+                "lite-install": true,
                 "skip-gmagick": true
             },
             "mailpit": {
@@ -249,6 +268,7 @@
             "xdebug": {}
         },
         "overrideFeatureInstallOrder": [
+            "./entrypoints",
             "./php",
             "./xdebug",
             "./mailpit",

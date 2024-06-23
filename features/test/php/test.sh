@@ -19,6 +19,13 @@ done
 
 check "composer version" composer --version
 
+ME="$(whoami)"
+if [[ "${ME}" = 'root' ]]; then
+    check "php-fpm configuration is valid" php-fpm -t
+else
+    check "php-fpm configuration is valid" sudo php-fpm -t
+fi
+
 if [[ -d /etc/sv ]]; then
     check "/etc/sv/php-fpm/run exists and is executable" test -x /etc/sv/php-fpm/run
     check "/etc/service/php-fpm is a symlink" test -L /etc/service/php-fpm
