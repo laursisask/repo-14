@@ -113,5 +113,146 @@
             "./mailpit",
             "./vip-cli"
         ]
+    },
+
+    "ubuntu-81-mcr": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "php": {
+                "version": "8.1",
+                "composer": true,
+                "install-runit-service": false,
+                "lite": true
+            },
+            "mailpit": {
+                "install-runit-service": false
+            },
+            "vip-cli": {},
+            "xdebug": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./xdebug",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+    "ubuntu-82-mcr": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "php": {
+                "version": "8.2",
+                "composer": true,
+                "install-runit-service": false,
+                "lite": true
+            },
+            "mailpit": {
+                "install-runit-service": false
+            },
+            "vip-cli": {},
+            "xdebug": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./xdebug",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+    "ubuntu-83-mcr": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "php": {
+                "version": "8.3",
+                "composer": true,
+                "install-runit-service": false,
+                "lite": true
+            },
+            "mailpit": {
+                "install-runit-service": false
+            },
+            "vip-cli": {},
+            "xdebug": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./xdebug",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+
+    "alpine-81-mcr": {
+        "image": "mcr.microsoft.com/devcontainers/base:alpine",
+        "features": {
+            "php": {
+                "version": "8.1",
+                "composer": true,
+                "install-runit-service": false,
+                "lite": true,
+                "skip-gmagick": true
+            },
+            "mailpit": {
+                "install-runit-service": false
+            },
+            "vip-cli": {},
+            "xdebug": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./xdebug",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+    "alpine-82-mcr": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "php": {
+                "version": "8.2",
+                "composer": true,
+                "install-runit-service": false,
+                "lite": true,
+                "skip-gmagick": true
+            },
+            "mailpit": {
+                "install-runit-service": false
+            },
+            "vip-cli": {},
+            "xdebug": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./xdebug",
+            "./mailpit",
+            "./vip-cli"
+        ]
+    },
+    "alpine-83-mcr": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "php": {
+                "version": "8.3",
+                "composer": true,
+                "install-runit-service": false,
+                "lite": true,
+                "skip-gmagick": true
+            },
+            "mailpit": {
+                "install-runit-service": false
+            },
+            "vip-cli": {},
+            "xdebug": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./php",
+            "./xdebug",
+            "./mailpit",
+            "./vip-cli"
+        ]
     }
 }
