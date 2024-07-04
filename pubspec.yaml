@@ -30,8 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  go_router: ^14.1.3
-  zeta_flutter: ^0.10.0
+  go_router: ^14.2.0
+  zeta_flutter: ^0.14.0
 
 dev_dependencies:
   flutter_test:
