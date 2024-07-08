@@ -18,35 +18,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext _) {
-    return ZetaProvider(
-      initialThemeData: ZetaThemeData(
-        colorsDark: ZetaColors.dark(
-            // TODO(Theme): Add custom color pallete
-            ),
-        colorsLight: ZetaColors.light(
-            // TODO(Theme): Add custom color pallete
-            ),
-      ),
-      builder: (context, themeData, themeMode) {
-        final dark = themeData.colorsDark.toScheme();
-        final light = themeData.colorsLight.toScheme();
+    return ZetaProvider.base(
+      //TODO: Add custom colors, fonts, etc.
+      builder: (context, lightTheme, darkTheme, themeMode) {
         return MaterialApp.router(
           routerConfig: goRouter,
           themeMode: themeMode,
-          theme: ThemeData(
-            useMaterial3: true,
-            fontFamily: themeData.fontFamily,
-            scaffoldBackgroundColor: light.surfaceTertiary,
-            colorScheme: light,
-            textTheme: zetaTextTheme,
-          ),
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            fontFamily: themeData.fontFamily,
-            scaffoldBackgroundColor: dark.surfaceTertiary,
-            colorScheme: dark,
-            textTheme: zetaTextTheme,
-          ),
+          theme: lightTheme,
+          darkTheme: darkTheme,
         );
       },
     );

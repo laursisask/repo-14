@@ -34,15 +34,15 @@ class _ExamplePageState extends State<ExamplePage> {
             child: Row(
               children: const [
                 ZetaStatusLabel(label: 'Status label'),
-                ZetaPriorityPill(priority: 'Priority Pill'),
-                ZetaBadge(label: 'Badge'),
+                ZetaPriorityPill(label: 'Priority Pill'),
+                ZetaLabel(label: 'Label'),
                 ZetaIndicator.icon(),
                 ZetaIndicator.notification(),
                 ZetaTag.left(label: 'Tag'),
-              ].gap(ZetaSpacing.m),
-            ).paddingHorizontal(ZetaSpacing.m),
+              ].gap(ZetaSpacing.xl_2),
+            ).paddingHorizontal(ZetaSpacing.xl_2),
           ),
-          ZetaSystemBanner(context: context, title: 'Banner'),
+          ZetaBanner(context: context, title: 'Banner'),
           ZetaBreadCrumbs(
             children: [
               ZetaBreadCrumb(label: 'BreadCrumb', onPressed: () {}),
@@ -93,8 +93,8 @@ class _ExamplePageState extends State<ExamplePage> {
                   rounded: true,
                   isLarge: true,
                 ),
-              ].gap(ZetaSpacing.m),
-            ).paddingHorizontal(ZetaSpacing.m),
+              ].gap(ZetaSpacing.xl_2),
+            ).paddingHorizontal(ZetaSpacing.xl_2),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -120,8 +120,8 @@ class _ExamplePageState extends State<ExamplePage> {
                     checked = b ?? false;
                   }),
                 ),
-              ].gap(ZetaSpacing.m),
-            ).paddingHorizontal(ZetaSpacing.m),
+              ].gap(ZetaSpacing.xl_2),
+            ).paddingHorizontal(ZetaSpacing.xl_2),
           ),
           Column(
             children: [
@@ -135,8 +135,8 @@ class _ExamplePageState extends State<ExamplePage> {
                       leading: ZetaAvatar(initials: 'AZ', size: ZetaAvatarSize.xxxs),
                     ),
                     const ZetaAssistChip(label: 'Assist Chip', leading: Icon(ZetaIcons.star_round)),
-                  ].gap(ZetaSpacing.m),
-                ).paddingHorizontal(ZetaSpacing.m),
+                  ].gap(ZetaSpacing.xl_2),
+                ).paddingHorizontal(ZetaSpacing.xl_2),
               ),
               ZetaFilterSelection(
                 items: List.generate(10, (e) => e).map((e) => ZetaFilterChip(label: 'Filter Chip ${e + 1}')).toList(),
@@ -145,6 +145,7 @@ class _ExamplePageState extends State<ExamplePage> {
           ),
           const ZetaDialPad(),
           ZetaDropdown(
+            onChange: (value) {},
             items: [
               ZetaDropdownItem(value: 'Dropdown item', icon: const Icon(ZetaIcons.add_box_sharp)),
               ZetaDropdownItem(value: 'Dropdown item 2', icon: const Icon(ZetaIcons.activity_round)),
@@ -164,8 +165,7 @@ class _ExamplePageState extends State<ExamplePage> {
           Column(
             children: [
               ZetaListItem(
-                title: const Text('List Item'),
-                selected: checked,
+                primaryText: 'List Item',
                 onTap: () => setState(() {
                   checked = !checked;
                 }),
@@ -184,12 +184,12 @@ class _ExamplePageState extends State<ExamplePage> {
                 count: 19,
                 enabledNotificationIcon: true,
                 enabledWarningIcon: true,
-                onCallTap: () {},
-                onDeleteTap: () {},
-                onMenuMoreTap: () {},
-                onPttTap: () {},
                 onTap: () {},
                 time: DateTime.now(),
+                slidableActions: [
+                  ZetaSlidableAction.call(onPressed: () {}),
+                  ZetaSlidableAction.delete(onPressed: () {}),
+                ],
               ),
             ],
           ),
@@ -203,21 +203,21 @@ class _ExamplePageState extends State<ExamplePage> {
                 const SizedBox(width: 250, child: ZetaPhoneInput(label: 'Phone Input')),
                 const SizedBox(width: 250, child: ZetaTimeInput(label: 'Phone Input')),
                 const SizedBox(width: 250, child: ZetaTextInput(label: 'Phone Input')),
-                const SizedBox(
+                SizedBox(
                   width: 250,
                   child: ZetaSelectInput(
-                    label: Text('Select Input'),
+                    label: 'Select Input',
                     items: [
-                      ZetaSelectInputItem(value: 'Item 1'),
-                      ZetaSelectInputItem(value: 'Item 2'),
-                      ZetaSelectInputItem(value: 'Item 3'),
-                      ZetaSelectInputItem(value: 'Item 4'),
-                      ZetaSelectInputItem(value: 'Item 5'),
+                      ZetaDropdownItem(value: 'Item 1'),
+                      ZetaDropdownItem(value: 'Item 2'),
+                      ZetaDropdownItem(value: 'Item 3'),
+                      ZetaDropdownItem(value: 'Item 4'),
+                      ZetaDropdownItem(value: 'Item 5'),
                     ],
                   ),
                 ),
-              ].gap(ZetaSpacing.m),
-            ).paddingHorizontal(ZetaSpacing.m),
+              ].gap(ZetaSpacing.xl_2),
+            ).paddingHorizontal(ZetaSpacing.xl_2),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -230,8 +230,8 @@ class _ExamplePageState extends State<ExamplePage> {
                 const SizedBox(width: 250, child: ZetaProgressBar(progress: 1, type: ZetaProgressBarType.buffering)),
                 const SizedBox(width: 250, child: ZetaProgressBar(progress: 1, type: ZetaProgressBarType.standard)),
                 const ZetaProgressCircle(progress: 1, size: ZetaCircleSizes.s),
-              ].gap(ZetaSpacing.m),
-            ).paddingHorizontal(ZetaSpacing.m),
+              ].gap(ZetaSpacing.xl_2),
+            ).paddingHorizontal(ZetaSpacing.xl_2),
           ),
           ZetaScreenHeaderBar(
             actionButtonLabel: 'Action',
@@ -275,7 +275,7 @@ class _ExamplePageState extends State<ExamplePage> {
           ),
           const ZetaTooltip(child: Text('Tooltip')),
           const SizedBox(height: 100),
-        ].gap(ZetaSpacing.xxl),
+        ].gap(ZetaSpacing.xl_10),
       ),
     );
   }

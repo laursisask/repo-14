@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.all(ZetaSpacing.m),
+      padding: EdgeInsets.all(ZetaSpacing.xl_2),
       child: Column(
         children: [
           ZetaInPageBanner(
