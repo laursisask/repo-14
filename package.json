@@ -1,27 +1,18 @@
 {
   "name": "fork-sync",
-  "version": "2.0.10",
   "private": true,
   "description": "Keep your fork up to date",
   "main": "lib/main.js",
+  "license": "UNLICENSED",
+  "prettier": "@exodus/prettier",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "prepare": "husky install",
+    "build": "ncc build src/main.ts --source-map -o lib",
+    "lint": "eslint .",
+    "lint:fix": "yarn lint --fix",
+    "format": "prettier \"**/*.{js,json,md,ts,yml}\" --ignore-path .eslintignore --write",
+    "format:check": "prettier --check \"**/*.{js,json,md,ts,yml}\" --ignore-path .eslintignore --loglevel warn"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tgymnich/fork-sync.git"
-  },
-  "keywords": [
-    "actions",
-    "node",
-    "setup",
-    "fork",
-    "automation",
-    "sync"
-  ],
-  "author": "tgymnich",
-  "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.1",
     "@actions/github": "^6.0.0",
@@ -29,7 +20,16 @@
     "@octokit/rest": "^20.1.1"
   },
   "devDependencies": {
+    "@exodus/eslint-config": "^5.22.0",
+    "@exodus/prettier": "^1.0.0",
     "@types/node": "^20.13.0",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "@vercel/ncc": "^0.38.1",
+    "eslint": "^8.56.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "husky": "^8.0.3",
+    "prettier": "^3.2.4",
     "typescript": "^5.4.5"
   }
 }
