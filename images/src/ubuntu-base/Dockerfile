@@ -6,7 +6,8 @@ RUN apt-get update \
         moreutils \
         runit \
         tzdata \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && deluser --remove-home ubuntu
 
 RUN \
     update-rc.d -f procps remove && \
