@@ -16,7 +16,11 @@ Sets up Playwright into the Dev Environment
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
 | enabled | Enable Playwright | boolean | true |
+| version | Playwright version to install | string | latest |
 
+This feature is available only for Debian-based containers.
+
+Alpine-based containers are **not** supported because the browsers used by Playwright are built against `libs`, not `musl`.
 
 
 ---
