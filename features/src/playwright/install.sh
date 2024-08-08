@@ -52,6 +52,8 @@ if [ "${ENABLED}" = "true" ]; then
             playwright-core install-deps
             su -s /bin/sh -c 'playwright-core install' "${_REMOTE_USER}"
 
+            update-rc.d -f dbus remove
+
             apt-get clean
             rm -rf /var/lib/apt/lists/*
         ;;
