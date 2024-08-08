@@ -1,0 +1,13 @@
+{
+    "id": "playwright",
+    "name": "Playwright",
+    "description": "Sets up Playwright into the Dev Environment",
+    "version": "1.0.0",
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable Playwright"
+        }
+    }
+}
