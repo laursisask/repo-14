@@ -11,6 +11,7 @@ fi
 
 : "${_REMOTE_USER:?"_REMOTE_USER is required"}"
 : "${ENABLED:=}"
+PLAYWRIGHT_VERSION="${VERSION:=latest}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing Playwright...'
@@ -47,7 +48,7 @@ if [ "${ENABLED}" = "true" ]; then
                 apt-get install -y nodejs
             fi
 
-            npm i -g playwright-core
+            npm i -g "playwright-core@${PLAYWRIGHT_VERSION}"
             playwright-core install-deps
             su -s /bin/sh -c 'playwright-core install' "${_REMOTE_USER}"
 
