@@ -10,13 +10,10 @@ if [ "$(id -u || true)" -ne 0 ]; then
 fi
 
 : "${ENABLED:=}"
-: "${VERSION:=latest}"
+VIP_CLI_VERSION="${VERSION:-latest}"
 
 if [ "${ENABLED}" = "true" ]; then
     echo '(*) Installing VIP CLI...'
-
-    # /etc/os-release may overwrite VERSION
-    VIP_CLI_VERSION="${VERSION}"
 
     if ! hash node >/dev/null 2>&1 || ! hash npm >/dev/null 2>&1; then
         # shellcheck source=/dev/null
@@ -28,32 +25,37 @@ if [ "${ENABLED}" = "true" ]; then
         case "${ID_LIKE}" in
             "debian")
                 export DEBIAN_FRONTEND=noninteractive
-                PACKAGES=""
 
-                if ! hash curl >/dev/null 2>&1; then
-                    PACKAGES="${PACKAGES} curl"
+                if ! hash node >/dev/null 2>&1 || ! hash npm >/dev/null 2>&1 || ! hash npx >/dev/null 2>&1; then
+                    PACKAGES=""
+                    if ! hash curl >/dev/null 2>&1; then
+                        PACKAGES="${PACKAGES} curl"
+                    fi
+
+                    if ! hash update-ca-certificates >/dev/null 2>&1; then
+                        PACKAGES="${PACKAGES} ca-certificates"
+                    fi
+
+                    if [ -n "${PACKAGES}" ]; then
+                        apt-get update
+                        # shellcheck disable=SC2086
+                        apt-get install -y --no-install-recommends ${PACKAGES}
+                    fi
+
+                    curl -fsSL https://deb.nodesource.com/setup_lts.x -o nodesource_setup.sh
+                    chmod +x nodesource_setup.sh
+                    ./nodesource_setup.sh
+                    apt-get install -y nodejs
+
+                    apt-get clean
+                    rm -rf /var/lib/apt/lists/*
                 fi
-
-                if ! hash update-ca-certificates >/dev/null 2>&1; then
-                    PACKAGES="${PACKAGES} ca-certificates"
-                fi
-
-                if [ -n "${PACKAGES}" ]; then
-                    apt-get update
-                    # shellcheck disable=SC2086
-                    apt-get install -y --no-install-recommends ${PACKAGES}
-                fi
-
-                curl -fsSL https://deb.nodesource.com/setup_lts.x -o nodesource_setup.sh && chmod +x nodesource_setup.sh
-                ./nodesource_setup.sh
-                apt-get install -y nodejs
-
-                apt-get clean
-                rm -rf /var/lib/apt/lists/*
             ;;
 
             "alpine")
-                apk add --no-cache nodejs npm
+                if ! hash node >/dev/null 2>&1 || ! hash npm >/dev/null 2>&1; then
+                    apk add --no-cache nodejs npm
+                fi
             ;;
 
             *)
