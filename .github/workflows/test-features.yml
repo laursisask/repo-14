@@ -91,6 +91,7 @@ jobs:
           - feature: php
             filter: '83'
           - feature: phpmyadmin
+          - feature: playwright
           - feature: ssh
           - feature: xdebug
           - feature: wordpress

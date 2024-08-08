@@ -1,0 +1,27 @@
+{
+    "ubuntu-base": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "playwright": {
+                "enabled": true
+            }
+        }
+    },
+    "debian-latest": {
+        "image": "debian:bookworm-slim",
+        "features": {
+            "playwright": {
+                "enabled": true
+            }
+        }
+    },
+    "ubuntu": {
+        "image": "ubuntu:latest",
+        "features": {
+            "playwright": {
+                "enabled": true
+            }
+        }
+    }
+}
