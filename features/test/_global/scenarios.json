@@ -59,6 +59,10 @@
                 "enabled": true,
                 "run_wp_cron": true,
                 "wp_cron_schedule": "*/15 * * * *"
+            },
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
             }
         },
         "overrideFeatureInstallOrder": [
@@ -141,6 +145,10 @@
                 "enabled": true,
                 "run_wp_cron": true,
                 "wp_cron_schedule": "*/15 * * * *"
+            },
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
             }
         },
         "overrideFeatureInstallOrder": [
@@ -223,6 +231,10 @@
                 "enabled": true,
                 "run_wp_cron": true,
                 "wp_cron_schedule": "*/15 * * * *"
+            },
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
             }
         },
         "overrideFeatureInstallOrder": [
@@ -309,6 +321,10 @@
             },
             "playwright": {
                 "enabled": true
+            },
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
             }
         },
         "overrideFeatureInstallOrder": [
@@ -395,6 +411,10 @@
             },
             "playwright": {
                 "enabled": true
+            },
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
             }
         },
         "overrideFeatureInstallOrder": [
@@ -481,6 +501,10 @@
             },
             "playwright": {
                 "enabled": true
+            },
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
             }
         },
         "overrideFeatureInstallOrder": [
