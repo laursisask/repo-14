@@ -1,0 +1,64 @@
+{
+    "alpine-base": {
+        "image": "ghcr.io/automattic/vip-codespaces/alpine-base:latest",
+        "overrideCommand": false,
+        "postCreateCommand": "use-wptl latest",
+        "features": {
+            "mariadb": {},
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
+            }
+        }
+    },
+    "ubuntu-base": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "postCreateCommand": "use-wptl latest",
+        "features": {
+            "mariadb": {},
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
+            }
+        }
+    },
+    "debian-latest": {
+        "image": "debian:bookworm-slim",
+        "postCreateCommand": "use-wptl latest",
+        "features": {
+            "entrypoints": {},
+            "mariadb": {
+                "install-runit-service": false
+            },
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./mariadb",
+            "./wptl"
+        ]
+    },
+    "ubuntu": {
+        "image": "ubuntu:latest",
+        "postCreateCommand": "use-wptl latest",
+        "features": {
+            "entrypoints": {},
+            "mariadb": {
+                "install-runit-service": false
+            },
+            "wptl": {
+                "enabled": true,
+                "version": "latest"
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./entrypoints",
+            "./mariadb",
+            "./wptl"
+        ]
+    }
+}

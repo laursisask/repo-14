@@ -1,0 +1,20 @@
+{
+    "id": "wptl",
+    "name": "WordPress Test Library",
+    "description": "Installs the WordPress Test Library for unit testing WordPress plugins",
+    "version": "1.0.0",
+    "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/wptl",
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to enable the WordPress Test Library"
+        },
+        "version": {
+            "type": "string",
+            "default": "",
+            "description": "The version of the WordPress Test Library to install",
+            "proposals": ["latest", "nightly"]
+        }
+    }
+}
