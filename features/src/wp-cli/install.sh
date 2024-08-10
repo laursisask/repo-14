@@ -19,51 +19,35 @@ else
     url="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 fi
 
-if ! hash wget >/dev/null 2>&1; then
+PACKAGES=""
+if ! hash curl >/dev/null 2>&1; then
+    PACKAGES="${PACKAGES} curl"
+fi
+
+if ! hash update-ca-certificates >/dev/null 2>&1; then
+    PACKAGES="${PACKAGES} ca-certificates"
+fi
+
+if [ -n "${PACKAGES}" ]; then
     # shellcheck source=/dev/null
     . /etc/os-release
 
     : "${ID:=}"
     : "${ID_LIKE:=${ID}}"
 
-    if [ -z "${ID}" ]; then
-        echo 'Unable to determine the distribution.'
-        exit 1
-    fi
-
     case "${ID_LIKE}" in
         "debian")
             export DEBIAN_FRONTEND=noninteractive
-            PACKAGES="wget"
-            if ! hash update-ca-certificates >/dev/null 2>&1; then
-                PACKAGES="${PACKAGES} ca-certificates"
-            fi
-
             apt-get update
             # shellcheck disable=SC2086
             apt-get install -y --no-install-recommends ${PACKAGES}
-
-            wget -q "${url}" -O /usr/local/bin/wp
-
-            # shellcheck disable=SC2086
-            apt-get purge -y --auto-remove ${PACKAGES}
             apt-get clean
             rm -rf /var/lib/apt/lists/*
         ;;
 
         "alpine")
-            PACKAGES="wget"
-            if ! hash update-ca-certificates >/dev/null 2>&1; then
-                PACKAGES="${PACKAGES} ca-certificates"
-            fi
-
             # shellcheck disable=SC2086
             apk add --no-cache ${PACKAGES}
-
-            wget -q "${url}" -O /usr/local/bin/wp
-
-            # shellcheck disable=SC2086
-            apk del --no-cache ${PACKAGES}
         ;;
 
         *)
@@ -71,9 +55,8 @@ if ! hash wget >/dev/null 2>&1; then
             exit 1
         ;;
     esac
-else
-    wget -q "${url}" -O /usr/local/bin/wp
 fi
 
+curl -sSL "${url}" -o /usr/local/bin/wp
 chmod 0755 /usr/local/bin/wp
 echo 'Done!'
