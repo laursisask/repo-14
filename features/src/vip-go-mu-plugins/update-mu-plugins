@@ -1,0 +1,43 @@
+#!/bin/sh
+
+set -e
+
+PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
+
+BRANCH="${1:-develop}"
+DEVELOPMENT_MODE="${2:-false}"
+
+if [ ! -d /wp/wp-content/mu-plugins ]; then
+    echo "No mu-plugins directory found, aborting."
+    exit 1
+fi
+
+DIR_UID="$(stat -c %u /wp/wp-content/mu-plugins)"
+DIR_GID="$(stat -c %g /wp/wp-content/mu-plugins)"
+MY_UID="$(id -u)"
+MY_GID="$(id -g)"
+
+if [ "${MY_UID}" -ne 0 ]; then
+    if [ "${MY_UID}" -ne "${DIR_UID}" ] || [ "${MY_GID}" -ne "${DIR_GID}" ]; then
+        echo "You must be root to change the owner of the mu-plugins directory."
+        exit 1
+    fi
+fi
+
+TEMP_DIR="$(mktemp -d)"
+
+trap 'rm -rf "${TEMP_DIR}"' EXIT INT TERM
+
+git clone --depth=1 --recurse-submodules --shallow-submodules https://github.com/Automattic/vip-go-mu-plugins.git "${TEMP_DIR}/mu-plugins" --branch "${BRANCH}" --single-branch -j4
+git clone --depth=1 https://github.com/Automattic/vip-go-mu-plugins-ext.git "${TEMP_DIR}/mu-plugins-ext" --single-branch
+
+if [ "${DEVELOPMENT_MODE}" != 'true' ]; then
+    rsync -a --delete "${TEMP_DIR}/mu-plugins/" "${TEMP_DIR}/mu-plugins-ext/" /wp/wp-content/mu-plugins --exclude-from="${TEMP_DIR}/mu-plugins/.dockerignore" --exclude-from="${TEMP_DIR}/mu-plugins-ext/.dockerignore" --exclude-from=/etc/vip-go-mu-plugins/.rsyncignore
+    find /wp/wp-content/mu-plugins \( -name .svn -o -name .github -o -name ".git*" \) -type d -exec rm -rfv {} \; 2> /dev/null
+else
+    rsync -a --delete "${TEMP_DIR}/mu-plugins/" "${TEMP_DIR}/mu-plugins-ext/" /wp/wp-content/mu-plugins --exclude-from=/etc/vip-go-mu-plugins/.rsyncignore
+fi
+
+if [ "${MY_UID}" -eq 0 ]; then
+    chown -R "${DIR_UID}:${DIR_GID}" /wp/wp-content/mu-plugins
+fi
