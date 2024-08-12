@@ -16,6 +16,8 @@ Sets up SSH into the Dev Environment
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
 | enabled | Enable OpenSSH | boolean | true |
+| port | Port to expose for SSH | string | 22 |
+| new_password | New password for the user | string | skip |
 
 
 
