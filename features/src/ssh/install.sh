@@ -38,6 +38,7 @@ if [ "${ENABLED:-}" = "true" ]; then
         "alpine")
             # shellcheck disable=SC2086
             apk add --no-cache openssh-server-pam openssl
+            ln -sf /usr/sbin/sshd.pam /usr/sbin/sshd
             rm -f /etc/conf.d/sshd /etc/init.d/sshd
             PRIVSEP_DIR=/var/empty
         ;;
