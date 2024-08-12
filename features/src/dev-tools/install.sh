@@ -16,4 +16,13 @@ echo '(*) Installing Dev Tools...'
 install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" /wp/wp-content/mu-plugins
 install -m 0644 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" dev-env-plugin.php /wp/wp-content/mu-plugins/dev-env-plugin.php
 
+install -d -m 0755 -o root -g root /etc/vip-go-mu-plugins
+if [ -f /etc/vip-go-mu-plugins/.rsyncignore ]; then
+    touch /etc/vip-go-mu-plugins/.rsyncignore
+fi
+
+if ! grep -qF dev-env-plugin.php /etc/vip-go-mu-plugins/.rsyncignore; then
+    echo 'dev-env-plugin.php' >> /etc/vip-go-mu-plugins/.rsyncignore
+fi
+
 echo 'Done!'
