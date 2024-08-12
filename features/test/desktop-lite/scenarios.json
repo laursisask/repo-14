@@ -1,0 +1,48 @@
+{
+    "ubuntu-base": {
+        "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
+        "overrideCommand": false,
+        "features": {
+            "base": {},
+            "desktop-lite": {
+                "enabled": true
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./base",
+            "./desktop-lite"
+        ]
+    },
+    "debian-latest": {
+        "image": "debian:bookworm-slim",
+        "features": {
+            "base": {},
+            "entrypoints": {},
+            "desktop-lite": {
+                "enabled": true,
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./base",
+            "./entrypoints",
+            "./desktop-lite"
+        ]
+    },
+    "ubuntu": {
+        "image": "ubuntu:latest",
+        "features": {
+            "base": {},
+            "entrypoints": {},
+            "desktop-lite": {
+                "enabled": true,
+                "install-runit-service": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./base",
+            "./entrypoints",
+            "./desktop-lite"
+        ]
+    }
+}
