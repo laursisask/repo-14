@@ -1,0 +1,44 @@
+{
+    "id": "desktop-lite",
+    "name": "Desktop Lite",
+    "description": "A lightweight desktop environment for development.",
+    "version": "1.0.0",
+    "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/desktop-lite",
+    "containerEnv": {
+        "DISPLAY": "127.0.0.1:0"
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "playwright.env": {
+                    "DISPLAY": "127.0.0.1:0"
+                }
+            }
+        }
+    },
+    "options": {
+        "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable the Desktop Lite feature."
+        },
+        "vnc_geometry": {
+            "type": "string",
+            "default": "1280x800",
+            "description": "The geometry of the VNC server."
+        },
+        "vnc_password": {
+            "type": "string",
+            "default": "vscode",
+            "description": "The password for the VNC server. The password must be at least six characters long, and  only the first eight characters are significant."
+        },
+        "install-runit-service": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to install a runit service for the Desktop Lite feature."
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/automattic/vip-codespaces/entrypoints"
+    ]
+}

@@ -325,6 +325,9 @@
             "wptl": {
                 "enabled": true,
                 "version": "latest"
+            },
+            "desktop-lite": {
+                "enabled": true
             }
         },
         "overrideFeatureInstallOrder": [
@@ -345,7 +348,8 @@
             "./phpmyadmin",
             "./vip-go-mu-plugins",
             "./xdebug",
-            "./dev-tools"
+            "./dev-tools",
+            "./desktop-lite"
         ]
     },
     "php82-ubuntu-base": {
@@ -415,6 +419,9 @@
             "wptl": {
                 "enabled": true,
                 "version": "latest"
+            },
+            "desktop-lite": {
+                "enabled": true
             }
         },
         "overrideFeatureInstallOrder": [
@@ -435,7 +442,8 @@
             "./vip-go-mu-plugins",
             "./xdebug",
             "./dev-tools",
-            "./playwright"
+            "./playwright",
+            "./desktop-lite"
         ]
     },
     "php83-ubuntu-base": {
@@ -505,6 +513,9 @@
             "wptl": {
                 "enabled": true,
                 "version": "latest"
+            },
+            "desktop-lite": {
+                "enabled": true
             }
         },
         "overrideFeatureInstallOrder": [
@@ -525,7 +536,8 @@
             "./vip-go-mu-plugins",
             "./xdebug",
             "./dev-tools",
-            "./playwright"
+            "./playwright",
+            "./desktop-lite"
         ]
     }
 }
