@@ -1,8 +1,9 @@
 {
     "id": "vip-go-mu-plugins",
     "name": "VIP Go MU Plugins",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "description": "Installs VIP Go MU Plugins into the Dev Environment",
+    "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/vip-go-mu-plugins",
     "options": {
         "enabled": {
             "type": "boolean",

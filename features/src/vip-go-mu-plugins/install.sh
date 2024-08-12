@@ -62,18 +62,11 @@ if [ "${ENABLED}" != "false" ]; then
     esac
 
     install -D -d -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" /wp/wp-content/mu-plugins
+    install -d -m 0755 -o root -g root /etc/vip-go-mu-plugins
+    install -m 0755 -o root -g root update-mu-plugins /usr/local/bin/update-mu-plugins
 
-    git clone --depth=1 --recurse-submodules --shallow-submodules https://github.com/Automattic/vip-go-mu-plugins.git /tmp/mu-plugins --branch "${BRANCH}" --single-branch -j4
-    git clone --depth=1 https://github.com/Automattic/vip-go-mu-plugins-ext.git /tmp/mu-plugins-ext --single-branch
-    if [ "${DEVELOPMENT_MODE}" != 'true' ]; then
-        rsync -a /tmp/mu-plugins/ /tmp/mu-plugins-ext/ /wp/wp-content/mu-plugins --exclude-from="/tmp/mu-plugins/.dockerignore" --exclude-from="/tmp/mu-plugins-ext/.dockerignore"
-        find /wp/wp-content/mu-plugins \( -name .svn -o -name .github -o -name ".git*" \) -type d -exec rm -rfv {} \; 2> /dev/null
-    else
-        rsync -a /tmp/mu-plugins/ /tmp/mu-plugins-ext/ /wp/wp-content/mu-plugins
-    fi
+    touch /etc/vip-go-mu-plugins/.rsyncignore
 
-    rm -rf /tmp/mu-plugins /tmp/mu-plugins-ext
-
-    chown -R "${_REMOTE_USER}:${_REMOTE_USER}" /wp/wp-content/mu-plugins
+    update-mu-plugins "${BRANCH}" "${DEVELOPMENT_MODE}"
     echo 'Done!'
 fi
