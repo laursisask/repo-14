@@ -143,6 +143,7 @@ if ! wp core is-installed >/dev/null 2>&1; then
     fi
 
     wp user add-cap 1 view_query_monitor
+    wp rewrite structure '/%postname%/'
 
     run-parts /var/lib/wordpress/postinstall.d
 else
