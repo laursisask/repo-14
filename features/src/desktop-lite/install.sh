@@ -29,6 +29,8 @@ if [ "${ENABLED}" = "true" ]; then
             export DEBIAN_FRONTEND=noninteractive
             PACKAGES=""
 
+            apt-get update
+
             if ! hash curl >/dev/null 2>&1; then
                 PACKAGES="${PACKAGES} curl"
             fi
@@ -49,7 +51,7 @@ if [ "${ENABLED}" = "true" ]; then
                 PACKAGES="${PACKAGES} tigervnc-standalone-server"
             fi
 
-            if ! hash tigervncpasswd >/dev/null 2>&1; then
+            if ! hash tigervncpasswd >/dev/null 2>&1 && [ -n "$(apt-cache --names-only search '^tigervnc-tools$' || true)" ]; then
                 PACKAGES="${PACKAGES} tigervnc-tools"
             fi
 
@@ -58,14 +60,14 @@ if [ "${ENABLED}" = "true" ]; then
             fi
 
             if [ -n "${PACKAGES}" ]; then
-                apt-get update
                 # shellcheck disable=SC2086
                 apt-get install -y --no-install-recommends ${PACKAGES}
                 apt-get clean
-                rm -rf /var/lib/apt/lists/*
 
                 update-rc.d -f dbus remove
             fi
+
+            rm -rf /var/lib/apt/lists/*
         ;;
 
         *)

@@ -9,4 +9,9 @@ sv start tigervnc || true
 
 export DISPLAY=:0
 # shellcheck disable=SC2154
-exec chpst -u "${_REMOTE_USER}:${_REMOTE_USER}" /usr/bin/openbox
+export USER="${_REMOTE_USER}"
+export LOGNAME="${USER}"
+# shellcheck disable=SC2155
+export HOME="$(getent passwd "${USER}" | cut -d: -f6)"
+
+exec chpst -u "${USER}:${USER}" /usr/bin/openbox
