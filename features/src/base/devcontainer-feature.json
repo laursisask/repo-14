@@ -1,7 +1,7 @@
 {
     "id": "base",
     "name": "VIP Codespaces Base",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "Base feature for VIP Codespaces",
     "documentationURL": "https://github.com/Automattic/vip-codespaces/tree/trunk/features/src/base",
     "containerEnv": {

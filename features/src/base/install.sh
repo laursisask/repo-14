@@ -14,9 +14,10 @@ fi
 
 HOME_DIR="$(getent passwd "${_REMOTE_USER}" | cut -d: -f6)"
 
-install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local"
-install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local/share/vip-codespaces"
-install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local/share/vip-codespaces/login"
+install -d -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local"
+install -d -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local/share"
+install -d -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local/share/vip-codespaces"
+install -d -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local/share/vip-codespaces/login"
 
 install -m 0644 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" .bashrc "${HOME_DIR}/.bashrc"
 install -m 0644 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" 001-welcome.sh "${HOME_DIR}/.local/share/vip-codespaces/login/001-welcome.sh"
