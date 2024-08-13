@@ -13,7 +13,6 @@ else
 fi
 
 # shellcheck disable=SC2154,SC2086
-setpriv --reuid="${_REMOTE_USER}" --regid="${_REMOTE_USER}" --inh-caps=-all --init-groups \
-    /usr/bin/Xtigervnc -geometry "${VNC_GEOMETRY}" -listen tcp -ac ${AUTH_OPTS} -AlwaysShared -AcceptKeyEvents -AcceptPointerEvents -SendCutText -AcceptCutText :0 &
-DISPLAY=:0 setpriv --reuid="${_REMOTE_USER}" --regid="${_REMOTE_USER}" --inh-caps=-all --init-groups /usr/bin/openbox &
-setpriv --reuid="${_REMOTE_USER}" --regid="${_REMOTE_USER}" --inh-caps=-all --init-groups /usr/local/bin/easy-novnc -a :5800 -h 127.0.0.1 --no-url-password &
+su -s /bin/sh -c "/usr/bin/Xtigervnc -geometry \"${VNC_GEOMETRY}\" -listen tcp -ac ${AUTH_OPTS} -AlwaysShared -AcceptKeyEvents -AcceptPointerEvents -SendCutText -AcceptCutText :0" "${_REMOTE_USER}" &
+DISPLAY=:0 su -s /bin/sh -c '/usr/bin/openbox' "${_REMOTE_USER}" &
+su -s /bin/sh -c '/usr/local/bin/easy-novnc -a :5800 -h 127.0.0.1 --no-url-password' "${_REMOTE_USER}" &
