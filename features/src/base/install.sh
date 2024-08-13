@@ -14,6 +14,7 @@ fi
 
 HOME_DIR="$(getent passwd "${_REMOTE_USER}" | cut -d: -f6)"
 
+install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local"
 install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local/share/vip-codespaces"
 install -d -D -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${HOME_DIR}/.local/share/vip-codespaces/login"
 
