@@ -41,6 +41,10 @@ fi
 MY_UID="$(id -u)"
 MY_GID="$(id -g)"
 
+if [ 0 -eq "${MY_UID}" ]; then
+    export WP_CLI_ALLOW_ROOT=1
+fi
+
 if [ -n "${RepositoryName}" ]; then
     base=/workspaces/${RepositoryName}
 else
@@ -50,24 +54,31 @@ fi
 for i in client-mu-plugins images languages plugins themes; do
     if [ -e "${base}/${i}" ]; then
         sudo rm -rf "/wp/wp-content/${i}"
-        sudo ln -sf "${base}/${i}" "/wp/wp-content/${i}"
     fi
 done
 
 if [ -e "${base}/vip-config" ]; then
-    sudo rm -rf "/wp/vip-config"
-    sudo ln -sf "${base}/vip-config" "/wp/vip-config"
+    sudo rm -rf /wp/vip-config
 fi
 
-if [ -n "${WP_PERSIST_UPLOADS}" ]; then
+sudo chown -R "${MY_UID}:${MY_GID}" /wp
+
+for i in client-mu-plugins images languages plugins themes; do
+    if [ -e "${base}/${i}" ]; then
+        ln -sf "${base}/${i}" "/wp/wp-content/${i}"
+    fi
+done
+
+if [ -e "${base}/vip-config" ]; then
+    ln -sf "${base}/vip-config" "/wp/vip-config"
+fi
+
+if [ -n "${WP_PERSIST_UPLOADS}" ] && [ -d /workspaces ]; then
     sudo install -d -o "${MY_UID}" -g "${MY_GID}" -m 0755 /workspaces/uploads
-    sudo install -d -o "${MY_UID}" -g "${MY_GID}" -m 0755 /wp/wp-content
     ln -sf /workspaces/uploads /wp/wp-content/uploads
 else
-    sudo install -d -o "${MY_UID}" -g "${MY_GID}" -m 0755 /wp/wp-content/uploads
+    install -d -m 0755 /wp/wp-content/uploads
 fi
-
-sudo install -d -o "${MY_UID}" -g "${MY_GID}" /wp/config /wp/log
 
 export WP_USERNAME="wordpress"
 export WP_PASSWORD="wordpress"
@@ -110,8 +121,9 @@ fi
     echo "GRANT ALL ON ${WP_DATABASE}.* TO 'netapp'@'localhost';"
 } | mysql -h "${db_host}" -u "${db_admin_user}"
 
+wp cache flush --skip-plugins --skip-themes
 echo "Checking for WordPress installation..."
-if ! wp core is-installed >/dev/null 2>&1; then
+if ! wp core is-installed --skip-plugins --skip-themes >/dev/null 2>&1; then
     echo "No installation found, installing WordPress..."
 
     wp db clean --yes 2> /dev/null
@@ -152,11 +164,11 @@ if ! wp core is-installed >/dev/null 2>&1; then
 
     run-parts /var/lib/wordpress/postinstall.d
 else
-    echo "WordPress already installed"
+    echo "WordPress is already installed"
 fi
 
 if [ ! -f "${HOME}/.local/share/vip-codespaces/login/010-wplogin.sh" ]; then
-    install -D -d -m 0755 -o "${MY_UID}" -g "${MY_GID}" "${HOME}/.local/share/vip-codespaces/login"
+    install -D -d -m 0755 "${HOME}/.local/share/vip-codespaces/login"
     export WP_URL="${wp_url}"
     # shellcheck disable=SC2016
     envsubst '$WP_URL' < /usr/share/wordpress/010-wplogin.tpl > "${HOME}/.local/share/vip-codespaces/login/010-wplogin.sh"
