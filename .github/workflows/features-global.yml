@@ -1,0 +1,56 @@
+name: Test Features (Global Scenarios)
+
+on:
+  push:
+    branches:
+      - trunk
+  pull_request:
+  schedule:
+    - cron: '15 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  global:
+    name: '${{ matrix.test }}'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        test:
+          - php81-alpine-base
+          - php82-alpine-base
+          - php83-alpine-base
+          - php81-ubuntu-base
+          - php82-ubuntu-base
+          - php83-ubuntu-base
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Install @devcontainers/cli
+        run: npm install -g @devcontainers/cli
+
+      - name: Expose GitHub Runtime
+        uses: Automattic/vip-actions/expose-github-runtime@e1faabf165941008de4c0c1381df153e49d8ad2c # v0.6.0
+
+      - name: Build images
+        run: |
+          REPO="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
+          IMAGE=
+          if [ "${{ contains(matrix.test, 'alpine') }}" = "true" ]; then
+            IMAGE=alpine-base
+          elif [ "${{ contains(matrix.test, 'ubuntu') }}" = "true" ]; then
+            IMAGE=ubuntu-base
+          fi
+          devcontainer build \
+            --workspace-folder "images/src/${IMAGE}" \
+            --image-name="ghcr.io/${REPO}/${IMAGE}:latest" \
+            --cache-from type=gha
+
+      - name: Run tests
+        run: devcontainer features test -p features --global-scenarios-only --filter "${{ matrix.test }}"
