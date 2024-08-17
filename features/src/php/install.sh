@@ -221,7 +221,7 @@ setup_php83_alpine() {
 
 setup_php81_deb() {
     if [ "${LITE_INSTALL}" != 'true' ]; then
-        EXTENSIONS="ghostscript php8.1-bcmath php8.1-gnupg php8.1-igbinary php8.1-intl php8.1-mcrypt php8.1-soap php8.1-ssh2"
+        EXTENSIONS="ghostscript php8.1-bcmath php8.1-igbinary php8.1-intl php8.1-mcrypt php8.1-soap php8.1-ssh2"
     else
         EXTENSIONS=
     fi
@@ -262,7 +262,7 @@ setup_php81_deb() {
 
 setup_php82_deb() {
     if [ "${LITE_INSTALL}" != 'true' ]; then
-        EXTENSIONS="ghostscript php8.2-bcmath php8.2-gnupg php8.2-igbinary php8.2-intl php8.2-mcrypt php8.2-soap php8.2-ssh2"
+        EXTENSIONS="ghostscript php8.2-bcmath php8.2-igbinary php8.2-intl php8.2-mcrypt php8.2-soap php8.2-ssh2"
     else
         EXTENSIONS=
     fi
@@ -303,7 +303,7 @@ setup_php82_deb() {
 
 setup_php83_deb() {
     if [ "${LITE_INSTALL}" != 'true' ]; then
-        EXTENSIONS="ghostscript php8.3-bcmath php8.3-gnupg php8.3-igbinary php8.3-intl php8.3-mcrypt php8.3-soap php8.3-ssh2"
+        EXTENSIONS="ghostscript php8.3-bcmath php8.3-igbinary php8.3-intl php8.3-mcrypt php8.3-soap php8.3-ssh2"
     else
         EXTENSIONS=
     fi
