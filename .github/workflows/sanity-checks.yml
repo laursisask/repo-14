@@ -22,9 +22,19 @@ jobs:
           head="${{ github.event.pull_request.head.sha }}"
           for image in images/src/*; do
             changes="$(git diff --merge-base --name-only "${base}" "${head}" -- "${image}" | grep -Fv "${image}/README.md" || true)"
-            if [ -n "${changes}" ] && ! echo "${changes}" | grep -q "${image}/.devcontainer.json"; then
-              echo "::error::Changes were made to ${image}, but the corresponding .devcontainer.json was not updated"
-              echo FAIL=1 >> "${GITHUB_ENV}"
+            if [ -n "${changes}" ]; then
+              if ! echo "${changes}" | grep -q "${image}/.devcontainer.json"; then
+                echo "::error::Changes were made to ${image}, but the corresponding .devcontainer.json was not updated"
+                echo FAIL=1 >> "${GITHUB_ENV}"
+              else
+                base_version="$(git show "${base}:${image}/.devcontainer.json" | jq -r '.["x-build"]["image-version"]')"
+                head_version="$(git show "${head}:${image}/.devcontainer.json" | jq -r '.["x-build"]["image-version"]')"
+
+                if [ "$base_version" = "$head_version" ]; then
+                  echo "::error::The image-version in ${image}/.devcontainer.json was not updated"
+                  echo FAIL=1 >> "${GITHUB_ENV}"
+                fi
+              fi
             fi
           done
 
@@ -33,10 +43,20 @@ jobs:
           base="${{ github.event.pull_request.base.sha }}"
           head="${{ github.event.pull_request.head.sha }}"
           for feature in features/src/*; do
-            changes="$(git diff --merge-base --name-only "${base}" "${head}" -- "${feature}" | grep -Fv "${feature}/README.md" || true)"
-            if [ -n "${changes}" ] && ! echo "${changes}" | grep -q "${feature}/devcontainer-feature.json"; then
-              echo "::error::Changes were made to ${feature}, but the corresponding devcontainer-feature.json was not updated"
-              echo FAIL=1 >> "${GITHUB_ENV}"
+            changes="$(git diff --merge-base --name-only "${base}" "${head}" -- "${feature}" | grep -Ev "${feature}/(README|NOTES).md" || true)"
+            if [ -n "${changes}" ]; then
+              if ! echo "${changes}" | grep -q "${feature}/devcontainer-feature.json"; then
+                echo "::error::Changes were made to ${feature}, but the corresponding devcontainer-feature.json was not updated"
+                echo FAIL=1 >> "${GITHUB_ENV}"
+              else
+                base_version="$(git show "${base}:${feature}/devcontainer-feature.json" | jq -r '.version')"
+                head_version="$(git show "${head}:${feature}/devcontainer-feature.json" | jq -r '.version')"
+
+                if [ "$base_version" = "$head_version" ]; then
+                  echo "::error::The version in ${image}/devcontainer-feature.json was not updated"
+                  echo FAIL=1 >> "${GITHUB_ENV}"
+                fi
+              fi
             fi
           done
 
@@ -46,9 +66,19 @@ jobs:
           head="${{ github.event.pull_request.head.sha }}"
           for template in templates/src/*; do
             changes="$(git diff --merge-base --name-only "${base}" "${head}" -- "${template}" | grep -Fv "${template}/README.md" || true)"
-            if [ -n "${changes}" ] && ! echo "${changes}" | grep -q "${template}/devcontainer-template.json"; then
-              echo "::error::Changes were made to ${template}, but the corresponding devcontainer-template.json was not updated"
-              echo FAIL=1 >> "${GITHUB_ENV}"
+            if [ -n "${changes}" ]; then
+              if ! echo "${changes}" | grep -q "${template}/devcontainer-template.json"; then
+                echo "::error::Changes were made to ${template}, but the corresponding devcontainer-template.json was not updated"
+                echo FAIL=1 >> "${GITHUB_ENV}"
+              else
+                base_version="$(git show "${base}:${template}/devcontainer-template.json" | jq -r '.version')"
+                head_version="$(git show "${head}:${template}/devcontainer-template.json" | jq -r '.version')"
+
+                if [ "$base_version" = "$head_version" ]; then
+                  echo "::error::The version in ${image}/devcontainer-template.json was not updated"
+                  echo FAIL=1 >> "${GITHUB_ENV}"
+                fi
+              fi
             fi
           done
 
