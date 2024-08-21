@@ -13,7 +13,7 @@ final goRouter = GoRouter(
       builder: (context, state, navigationShell) {
         return LayoutBuilder(
           builder: (context, constraints) {
-            final showBottomBar = constraints.maxWidth < 479;
+            final showBottomBar = constraints.maxWidth < 500;
 
             final body = CustomScrollView(
               slivers: [
@@ -42,8 +42,8 @@ final goRouter = GoRouter(
                           onSelect: (value) => navigationShell.goBranch(value),
                           selectedIndex: state.fullPath == '/' ? 0 : 1,
                           items: const [
-                            ZetaNavigationRailItem(label: 'Welcome', icon: Icon(ZetaIcons.content_round)),
-                            ZetaNavigationRailItem(label: 'Example', icon: Icon(ZetaIcons.star_round)),
+                            ZetaNavigationRailItem(label: 'Welcome', icon: Icon(ZetaIcons.content)),
+                            ZetaNavigationRailItem(label: 'Example', icon: Icon(ZetaIcons.star)),
                           ],
                         ),
                         Expanded(child: body),
@@ -54,8 +54,8 @@ final goRouter = GoRouter(
                       onTap: (value) => navigationShell.goBranch(value),
                       currentIndex: state.fullPath == '/' ? 0 : 1,
                       items: const [
-                        ZetaNavigationBarItem(icon: ZetaIcons.content_round, label: 'Welcome'),
-                        ZetaNavigationBarItem(icon: ZetaIcons.star_round, label: 'Example'),
+                        ZetaNavigationBarItem(icon: ZetaIcons.content, label: 'Welcome'),
+                        ZetaNavigationBarItem(icon: ZetaIcons.star, label: 'Example'),
                       ],
                     )
                   : null,

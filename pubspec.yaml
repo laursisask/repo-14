@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   go_router: ^14.2.0
-  zeta_flutter: ^0.14.0
+  zeta_flutter: ^0.15.1
 
 dev_dependencies:
   flutter_test:

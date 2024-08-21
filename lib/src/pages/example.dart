@@ -57,7 +57,7 @@ class _ExamplePageState extends State<ExamplePage> {
             child: Row(
               children: [
                 ZetaButton(
-                  label: 'Button',
+                  label: 'Open Dialog',
                   onPressed: () {
                     showZetaDialog(
                       context,
@@ -199,10 +199,10 @@ class _ExamplePageState extends State<ExamplePage> {
             child: Row(
               children: [
                 SizedBox(width: 250, child: ZetaDateInput(label: 'Date Input')),
-                const SizedBox(width: 250, child: ZetaPasswordInput(label: 'Password input')),
-                const SizedBox(width: 250, child: ZetaPhoneInput(label: 'Phone Input')),
-                const SizedBox(width: 250, child: ZetaTimeInput(label: 'Phone Input')),
-                const SizedBox(width: 250, child: ZetaTextInput(label: 'Phone Input')),
+                SizedBox(width: 250, child: ZetaPasswordInput(label: 'Password input')),
+                SizedBox(width: 250, child: ZetaPhoneInput(label: 'Phone Input')),
+                SizedBox(width: 250, child: ZetaTimeInput(label: 'Phone Input')),
+                SizedBox(width: 250, child: ZetaTextInput(label: 'Phone Input')),
                 SizedBox(
                   width: 250,
                   child: ZetaSelectInput(
@@ -238,7 +238,7 @@ class _ExamplePageState extends State<ExamplePage> {
             onActionButtonPressed: () {},
             title: const Text('Screen Header Bar'),
           ),
-          const ZetaSearchBar(),
+          ZetaSearchBar(),
           ZetaSegmentedControl(
             segments: const [
               ZetaButtonSegment(value: 1, child: Text('Segmented')),

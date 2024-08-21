@@ -3,10 +3,12 @@ import 'package:zeta_flutter/zeta_flutter.dart';
 
 import 'package:zeta_flutter_template/src/utils/routes.dart';
 
+// coverage:ignore-start
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
+// coverage:ignore-end
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
