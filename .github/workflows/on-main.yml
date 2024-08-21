@@ -1,0 +1,22 @@
+name: CI - On Main
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# This job is triggered when a new tag is pushed to the main branch.
+jobs:
+  # This job uses the release-please action to create a release PR.
+  # See https://github.com/googleapis/release-please
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          manifest-file: "release-please/.release-please-manifest.json"
+          config-file: "release-please/release-please-config.json"
