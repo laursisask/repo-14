@@ -1,0 +1,57 @@
+name: CI - Pull Request
+
+on:
+  pull_request:
+  # pull_request_target: # Uncomment this line if you are using pull_request_target
+
+# Pull Request Runs on the same branch will be cancelled
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Use the flutter-action to set up flutter, and cache dependencies
+      - uses: subosito/flutter-action@v2
+        with:
+          cache: true
+
+      # If you have generated code, you may want to run build_runner to generate the code
+      # - run: dart run build_runner build --delete-conflicting-outputs
+
+      # Uses the flutter-code-quality action to run code quality checks
+      # This will return a status check to the pull request
+      - uses: ZebraDevs/flutter-code-quality@v1.0.9
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+
+  # You may want to add more jobs here, such as building and testing your code.
+  # The following commented job is an example of deploying a preview version of your app
+  # deploy-preview:
+  #   name: Deploy preview version of the storybook on firebase
+  #   needs: code-quality
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         repository: ${{github.event.pull_request.head.repo.full_name}}
+  #         ref: ${{ github.head_ref }}
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         cache: true
+  #     - name: Setup flutter
+  #       run: flutter pub get
+  #     - name: Build example app
+  #       run: flutter build web
+  #     - uses: FirebaseExtended/action-hosting-deploy@v0
+  #       with:
+  #         repoToken: "${{ secrets.GITHUB_TOKEN }}"
+  #         firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZETA_DS }}"
+  #         channelId: "pr-${{ github.event.number }}-${{ github.event.pull_request.head.ref }}"
