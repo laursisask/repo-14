@@ -28,7 +28,7 @@ jobs:
 
       # Uses the flutter-code-quality action to run code quality checks
       # This will return a status check to the pull request
-      - uses: ZebraDevs/flutter-code-quality@fix/deleteLcov
+      - uses: ZebraDevs/flutter-code-quality@v1.0.9
         with:
           token: ${{secrets.GITHUB_TOKEN}}
 
