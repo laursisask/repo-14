@@ -10,6 +10,7 @@ async function run() {
   let repo = core.getInput('repo', { required: false }) || context.repo.repo
   const base = core.getInput('base', { required: false })
   const head = core.getInput('head', { required: false })
+  const headRepo = core.getInput('head_repo', { required: false })
   const mergeMethod = core.getInput('merge_method', { required: false })
   const prTitle = core.getInput('pr_title', { required: false })
   const prMessage = core.getInput('pr_message', { required: false })
@@ -36,10 +37,12 @@ async function run() {
       repo: context.repo.repo,
       title: prTitle,
       head: owner + ':' + head,
+      head_repo: headRepo,
       base,
       body: prMessage,
       maintainer_can_modify: false,
     })
+
     await delay(20)
     if (autoApprove) {
       await octokit.rest.pulls.createReview({
@@ -105,19 +108,13 @@ async function run() {
       )
     }
 
-    if (
-      (error?.errors ?? error?.response?.data?.errors)?.[0]?.message?.startsWith(
-        'No commits between'
-      )
-    ) {
-      console.log(
-        'No commits between ' + context.repo.owner + ':' + base + ' and ' + owner + ':' + head
-      )
-    } else if (
-      (error?.errors ?? error?.response?.data?.errors)?.[0]?.message?.startsWith(
-        'A pull request already exists for'
-      )
-    ) {
+    const errorMsg = (error?.errors ?? error?.response?.data?.errors)?.[0]?.message
+    if (errorMsg?.startsWith('No commits between')) {
+      const headDesc = headRepo ? `${headRepo}:${head}` : `${owner}:${repo}:${head}`
+      const baseDesc = `${context.repo.owner}:${context.repo.repo}:${base}`
+
+      console.log(`No commits between ${headDesc} and ${baseDesc}`)
+    } else if (errorMsg?.startsWith('A pull request already exists for')) {
       // we were already done
       console.log(error.errors[0].message)
     } else {

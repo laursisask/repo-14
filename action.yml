@@ -19,6 +19,9 @@ inputs:
     description: 'Branch to track'
     required: false
     default: 'master'
+  head_repo:
+    description: 'Target repository to update'
+    required: false
   base:
     description: 'Branch to keep updated'
     required: false
