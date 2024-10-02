@@ -2,7 +2,7 @@
 extern crate criterion;
 use criterion::{black_box, BenchmarkId, Criterion};
 
-use pprof::criterion::{Output, PProfProfiler};
+use pprof2::criterion::{Output, PProfProfiler};
 
 // Thanks to the example provided by @jebbow in his article
 // https://www.jibbow.com/posts/criterion-flamegraphs/

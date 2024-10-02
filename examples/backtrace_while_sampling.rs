@@ -11,7 +11,7 @@ fn deep_recursive(depth: i32) {
 }
 
 fn main() {
-    let guard = pprof::ProfilerGuardBuilder::default()
+    let guard = pprof2::ProfilerGuardBuilder::default()
         .frequency(1000)
         .blocklist(&["libc", "libgcc", "pthread"])
         .build()
