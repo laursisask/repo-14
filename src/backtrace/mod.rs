@@ -28,6 +28,9 @@ impl Symbol for backtrace::Symbol {
     }
 }
 
+// Methods in the trait are unused without feature flags, so we expect to get
+// a dead_code lint here.
+#[expect(dead_code)]
 pub trait Frame: Sized + Clone {
     type S: Symbol;
 
