@@ -41,12 +41,6 @@ jobs:
           command: clippy
           args: --all-targets --features flamegraph,prost-codec -- -D warnings
 
-      - name: Run cargo clippy protobuf
-        uses: actions-rs/cargo@v1.0.3
-        with:
-          command: clippy
-          args: --all-targets --features flamegraph,protobuf-codec -- -D warnings
-
       - name: Check if the prost file committed to git is up-to-date
         run: |
           git diff --no-ext-diff --exit-code
