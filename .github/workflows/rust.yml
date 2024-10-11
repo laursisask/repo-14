@@ -91,12 +91,6 @@ jobs:
           command: build
           args: --features flamegraph,prost-codec --target ${{ matrix.target }}
 
-      - name: Run cargo build protobuf
-        uses: actions-rs/cargo@v1.0.3
-        with:
-          command: build
-          args: --features flamegraph,protobuf-codec --target ${{ matrix.target }}
-
       - name: Run cargo build frame pointer
         if: ${{ matrix.toolchain == 'nightly' && matrix.os == 'ubuntu-latest' }}
         uses: actions-rs/cargo@v1.0.3
@@ -147,9 +141,3 @@ jobs:
         with:
           command: test
           args: --features flamegraph,prost-codec --target ${{ matrix.target }}
-
-      - name: Run cargo test protobuf
-        uses: actions-rs/cargo@v1.0.3
-        with:
-          command: test
-          args: --features flamegraph,protobuf-codec --target ${{ matrix.target }}
