@@ -2,17 +2,17 @@
 
 `pprof` is a cpu profiler that can be easily integrated into a rust program.
 
-[![Actions Status](https://github.com/tikv/pprof-rs/workflows/build/badge.svg)](https://github.com/tikv/pprof-rs/actions)
-[![Crates.io](https://img.shields.io/crates/v/pprof.svg)](https://crates.io/crates/pprof)
-[![Dependency Status](https://deps.rs/repo/github/tikv/pprof-rs/status.svg)](https://deps.rs/repo/github/tikv/pprof-rs)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftikv%2Fpprof-rs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftikv%2Fpprof-rs?ref=badge_shield)
+[![Actions Status](https://github.com/EmbarkStudios/pprof-rs/workflows/build/badge.svg)](https://github.com/EmbarkStudios/pprof-rs/actions)
+[![Crates.io](https://img.shields.io/crates/v/pprof.svg)](https://crates.io/crates/pprof2)
+[![Dependency Status](https://deps.rs/repo/github/EmbarkStudios/pprof-rs/status.svg)](https://deps.rs/repo/github/EmbarkStudios/pprof-rs)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FEmbarkStudios%2Fpprof-rs.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FEmbarkStudios%2Fpprof-rs?ref=badge_shield)
 
 ## Usage
 
 First, get a guard to start profiling. Profiling will continue until this guard was dropped.
 
 ```rust
-let guard = pprof::ProfilerGuardBuilder::default().frequency(1000).blocklist(&["libc", "libgcc", "pthread", "vdso"]).build().unwrap();
+let guard = pprof2::ProfilerGuardBuilder::default().frequency(1000).blocklist(&["libc", "libgcc", "pthread", "vdso"]).build().unwrap();
 ```
 
 During the profiling time, you can get a report with the guard.
@@ -26,8 +26,8 @@ if let Ok(report) = guard.report().build() {
 `Debug` was implemented for `Report`. It will print a human-readable stack counter report. Here is an example:
 
 ```
-FRAME: backtrace::backtrace::trace::h3e91a3123a3049a5 -> FRAME: pprof::profiler::perf_signal_handler::h7b995c4ab2e66493 -> FRAME: Unknown -> FRAME: prime_number::is_prime_number::h70653a2633b88023 -> FRAME: prime_number::main::h47f1058543990c8b -> FRAME: std::rt::lang_start::{{closure}}::h4262e250f8024b06 -> FRAME: std::rt::lang_start_internal::{{closure}}::h812f70926ebbddd0 -> std::panicking::try::do_call::h3210e2ce6a68897b -> FRAME: __rust_maybe_catch_panic -> FRAME: std::panicking::try::h28c2e2ec1c3871ce -> std::panic::catch_unwind::h05e542185e35aabf -> std::rt::lang_start_internal::hd7efcfd33686f472 -> FRAME: main -> FRAME: __libc_start_main -> FRAME: _start -> FRAME: Unknown -> THREAD: prime_number 1217
-FRAME: backtrace::backtrace::trace::h3e91a3123a3049a5 -> FRAME: pprof::profiler::perf_signal_handler::h7b995c4ab2e66493 -> FRAME: Unknown -> FRAME: alloc::alloc::box_free::h82cea48ed688e081 -> FRAME: prime_number::main::h47f1058543990c8b -> FRAME: std::rt::lang_start::{{closure}}::h4262e250f8024b06 -> FRAME: std::rt::lang_start_internal::{{closure}}::h812f70926ebbddd0 -> std::panicking::try::do_call::h3210e2ce6a68897b -> FRAME: __rust_maybe_catch_panic -> FRAME: std::panicking::try::h28c2e2ec1c3871ce -> std::panic::catch_unwind::h05e542185e35aabf -> std::rt::lang_start_internal::hd7efcfd33686f472 -> FRAME: main -> FRAME: __libc_start_main -> FRAME: _start -> FRAME: Unknown -> THREAD: prime_number 1
+FRAME: backtrace::backtrace::trace::h3e91a3123a3049a5 -> FRAME: pprof2::profiler::perf_signal_handler::h7b995c4ab2e66493 -> FRAME: Unknown -> FRAME: prime_number::is_prime_number::h70653a2633b88023 -> FRAME: prime_number::main::h47f1058543990c8b -> FRAME: std::rt::lang_start::{{closure}}::h4262e250f8024b06 -> FRAME: std::rt::lang_start_internal::{{closure}}::h812f70926ebbddd0 -> std::panicking::try::do_call::h3210e2ce6a68897b -> FRAME: __rust_maybe_catch_panic -> FRAME: std::panicking::try::h28c2e2ec1c3871ce -> std::panic::catch_unwind::h05e542185e35aabf -> std::rt::lang_start_internal::hd7efcfd33686f472 -> FRAME: main -> FRAME: __libc_start_main -> FRAME: _start -> FRAME: Unknown -> THREAD: prime_number 1217
+FRAME: backtrace::backtrace::trace::h3e91a3123a3049a5 -> FRAME: pprof2::profiler::perf_signal_handler::h7b995c4ab2e66493 -> FRAME: Unknown -> FRAME: alloc::alloc::box_free::h82cea48ed688e081 -> FRAME: prime_number::main::h47f1058543990c8b -> FRAME: std::rt::lang_start::{{closure}}::h4262e250f8024b06 -> FRAME: std::rt::lang_start_internal::{{closure}}::h812f70926ebbddd0 -> std::panicking::try::do_call::h3210e2ce6a68897b -> FRAME: __rust_maybe_catch_panic -> FRAME: std::panicking::try::h28c2e2ec1c3871ce -> std::panic::catch_unwind::h05e542185e35aabf -> std::rt::lang_start_internal::hd7efcfd33686f472 -> FRAME: main -> FRAME: __libc_start_main -> FRAME: _start -> FRAME: Unknown -> THREAD: prime_number 1
 FRAME: backtrace::backtrace::trace::h3e91a3123a3049a5 -> FRAME: pprof::profiler::perf_signal_handler::h7b995c4ab2e66493 -> FRAME: Unknown -> FRAME: prime_number::main::h47f1058543990c8b -> FRAME: std::rt::lang_start::{{closure}}::h4262e250f8024b06 -> FRAME: std::rt::lang_start_internal::{{closure}}::h812f70926ebbddd0 -> std::panicking::try::do_call::h3210e2ce6a68897b -> FRAME: __rust_maybe_catch_panic -> FRAME: std::panicking::try::h28c2e2ec1c3871ce -> std::panic::catch_unwind::h05e542185e35aabf -> std::rt::lang_start_internal::hd7efcfd33686f472 -> FRAME: main -> FRAME: __libc_start_main -> FRAME: _start -> FRAME: Unknown -> THREAD: prime_number 1
 ```
 
@@ -43,7 +43,7 @@ FRAME: backtrace::backtrace::trace::h3e91a3123a3049a5 -> FRAME: pprof::profiler:
 ## Flamegraph
 
 ```toml
-pprof = { version = "0.13", features = ["flamegraph"] }
+pprof2 = { version = "0.13", features = ["flamegraph"] }
 ```
 
 If `flamegraph` feature is enabled, you can generate flamegraph from the report. `Report` struct has a method `flamegraph` which can generate flamegraph and write it into a `Write`.
@@ -60,7 +60,7 @@ Additionally, custom flamegraph options can be specified.
 ```rust
 if let Ok(report) = guard.report().build() {
     let file = File::create("flamegraph.svg").unwrap();
-    let mut options = pprof::flamegraph::Options::default();
+    let mut options = pprof2::flamegraph::Options::default();
     options.image_width = Some(2500);
     report.flamegraph_with_options(file, &mut options).unwrap();
 };
@@ -77,7 +77,7 @@ Before the report was generated, `frame_post_processor` was provided as an inter
 For example:
 
 ```rust
-fn frames_post_processor() -> impl Fn(&mut pprof::Frames) {
+fn frames_post_processor() -> impl Fn(&mut pprof2::Frames) {
     let thread_rename = [
         (Regex::new(r"^grpc-server-\d*$").unwrap(), "grpc-server"),
         (Regex::new(r"^cop-high\d*$").unwrap(), "cop-high"),
@@ -151,7 +151,7 @@ Then `pprof` will generate a svg file according to the profile.
 With `criterion` feature enabled, a criterion custom profiler is provided in `pprof-rs`.
 
 ```rust
-use pprof::criterion::{PProfProfiler, Output};
+use pprof2::criterion::{PProfProfiler, Output};
 
 criterion_group!{
     name = benches;
@@ -218,7 +218,7 @@ Unfortunately, there is no 100% robust stack tracing method. [Some related resea
 This can be resolved by adding a blocklist:
 
 ```rust
-let guard = pprof::ProfilerGuardBuilder::default().frequency(1000).blocklist(&["libc", "libgcc", "pthread", "vdso"]).build().unwrap();
+let guard = pprof2::ProfilerGuardBuilder::default().frequency(1000).blocklist(&["libc", "libgcc", "pthread", "vdso"]).build().unwrap();
 ```
 
 The `vdso` should also be added to the blocklist, because in some distribution (e.g. ubuntu 18.04), the dwarf information in vdso is incorrect.

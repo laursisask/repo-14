@@ -9,13 +9,13 @@
 //! A sample usage is:
 //!
 //! ```rust
-//! let guard = pprof::ProfilerGuard::new(100).unwrap();
+//! let guard = pprof2::ProfilerGuard::new(100).unwrap();
 //! ```
 //!
 //! Then you can read report from the guard:
 //!
 //! ```rust
-//! # let guard = pprof::ProfilerGuard::new(100).unwrap();
+//! # let guard = pprof2::ProfilerGuard::new(100).unwrap();
 //!if let Ok(report) = guard.report().build() {
 //!    println!("report: {:?}", &report);
 //!};
@@ -24,7 +24,7 @@
 //! More configuration can be passed through `ProfilerGuardBuilder`:
 //!
 //! ```rust
-//! let guard = pprof::ProfilerGuardBuilder::default().frequency(1000).blocklist(&["libc", "libgcc", "pthread", "vdso"]).build().unwrap();
+//! let guard = pprof2::ProfilerGuardBuilder::default().frequency(1000).blocklist(&["libc", "libgcc", "pthread", "vdso"]).build().unwrap();
 //! ```
 //!
 //! The frequency means the sampler frequency, and the `blocklist` means the
@@ -37,7 +37,7 @@
 //! so it's also suggested to skip it.
 //!
 //! You can find more details in
-//! [README.md](https://github.com/tikv/pprof-rs/blob/master/README.md)
+//! [README.md](https://github.com/EmbarkStudios/pprof-rs/blob/master/README.md)
 
 /// Define the MAX supported stack depth. TODO: make this variable mutable.
 pub const MAX_DEPTH: usize = 128;
