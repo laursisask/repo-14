@@ -36,7 +36,7 @@
     "regenerator-runtime": "^0.13.7",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "whatwg-url": "^8.0.0"
+    "whatwg-url": "^14.0.0"
   },
   "repository": {
     "type": "git",
