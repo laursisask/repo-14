@@ -248,7 +248,7 @@ jobs:
       uses: actions/checkout@v2
     - continue-on-error: true
       name: Publish to PyPi
-      uses: actions/setup-python@v2.1.4
+      uses: actions/setup-python@v5.2.0
       with:
         python-version: ${{ matrix.python-version }}
     - continue-on-error: true
