@@ -7,7 +7,7 @@ Sets up wp-cli in the devcontainer
 
 ```json
 "features": {
-    "ghcr.io/Automattic/vip-codespaces/wp-cli:1": {}
+    "ghcr.io/laursisask/repo-14/wp-cli:1": {}
 }
 ```
 
@@ -21,4 +21,4 @@ Sets up wp-cli in the devcontainer
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Automattic/vip-codespaces/blob/main/features/src/wp-cli/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/laursisask/repo-14/blob/main/features/src/wp-cli/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

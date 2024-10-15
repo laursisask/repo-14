@@ -7,7 +7,7 @@ Configures Xdebug for the Dev Environment
 
 ```json
 "features": {
-    "ghcr.io/Automattic/vip-codespaces/xdebug:1": {}
+    "ghcr.io/laursisask/repo-14/xdebug:1": {}
 }
 ```
 
@@ -28,4 +28,4 @@ Configures Xdebug for the Dev Environment
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Automattic/vip-codespaces/blob/main/features/src/xdebug/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/laursisask/repo-14/blob/main/features/src/xdebug/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

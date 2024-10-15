@@ -7,7 +7,7 @@ A lightweight desktop environment for development.
 
 ```json
 "features": {
-    "ghcr.io/Automattic/vip-codespaces/desktop-lite:1": {}
+    "ghcr.io/laursisask/repo-14/desktop-lite:1": {}
 }
 ```
 
@@ -24,4 +24,4 @@ A lightweight desktop environment for development.
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Automattic/vip-codespaces/blob/main/features/src/desktop-lite/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/laursisask/repo-14/blob/main/features/src/desktop-lite/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

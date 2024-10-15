@@ -7,7 +7,7 @@ Installs the WordPress Test Library for unit testing WordPress plugins
 
 ```json
 "features": {
-    "ghcr.io/Automattic/vip-codespaces/wptl:1": {}
+    "ghcr.io/laursisask/repo-14/wptl:1": {}
 }
 ```
 
@@ -34,4 +34,4 @@ It can be specified as the exact version (`6.0.9`), `latest` (latest stable rele
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Automattic/vip-codespaces/blob/main/features/src/wptl/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/laursisask/repo-14/blob/main/features/src/wptl/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

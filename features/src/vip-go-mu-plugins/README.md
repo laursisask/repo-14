@@ -7,7 +7,7 @@ Installs VIP Go MU Plugins into the Dev Environment
 
 ```json
 "features": {
-    "ghcr.io/Automattic/vip-codespaces/vip-go-mu-plugins:2": {}
+    "ghcr.io/laursisask/repo-14/vip-go-mu-plugins:2": {}
 }
 ```
 
@@ -33,4 +33,4 @@ update-mu-plugins [branch] [dev-mode]
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Automattic/vip-codespaces/blob/main/features/src/vip-go-mu-plugins/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/laursisask/repo-14/blob/main/features/src/vip-go-mu-plugins/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

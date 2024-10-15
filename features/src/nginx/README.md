@@ -7,7 +7,7 @@ Installs nginx into the Dev Environment
 
 ```json
 "features": {
-    "ghcr.io/Automattic/vip-codespaces/nginx:1": {}
+    "ghcr.io/laursisask/repo-14/nginx:1": {}
 }
 ```
 
@@ -22,4 +22,4 @@ Installs nginx into the Dev Environment
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Automattic/vip-codespaces/blob/main/features/src/nginx/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/laursisask/repo-14/blob/main/features/src/nginx/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

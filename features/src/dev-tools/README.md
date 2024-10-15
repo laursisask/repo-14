@@ -7,7 +7,7 @@ Installs Development tools into the Dev Environment
 
 ```json
 "features": {
-    "ghcr.io/Automattic/vip-codespaces/dev-tools:1": {}
+    "ghcr.io/laursisask/repo-14/dev-tools:1": {}
 }
 ```
 
@@ -20,4 +20,4 @@ This plugin adds the functionality available in [VIP Local Development Environme
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/Automattic/vip-codespaces/blob/main/features/src/dev-tools/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/laursisask/repo-14/blob/main/features/src/dev-tools/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
