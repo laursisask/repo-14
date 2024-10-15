@@ -270,7 +270,7 @@ jobs:
 
         '
     - continue-on-error: true
-      uses: actions-rust-lang/setup-rust-toolchain@v1.10.0
+      uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       with:
         cache: false
     - continue-on-error: true
@@ -799,7 +799,7 @@ jobs:
 
         '
     - continue-on-error: true
-      uses: actions-rust-lang/setup-rust-toolchain@v1.10.0
+      uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       with:
         cache: false
     - continue-on-error: true
@@ -1076,7 +1076,7 @@ jobs:
 
         '
     - continue-on-error: true
-      uses: actions-rust-lang/setup-rust-toolchain@v1.10.0
+      uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       with:
         cache: false
         components: clippy
@@ -1641,7 +1641,7 @@ jobs:
 
         '
     - continue-on-error: true
-      uses: actions-rust-lang/setup-rust-toolchain@v1.10.0
+      uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       with:
         cache: false
     - continue-on-error: true
