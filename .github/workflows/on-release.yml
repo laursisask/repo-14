@@ -1,9 +1,0 @@
-name: CI - On Release
-on:
-  push:
-    tags:
-      - "*"
-# jobs:
-## This job is triggered when a new tag is pushed to the repository.
-## Typically this would be a release from release-please.
-## Here you may want to create a build, publish to a package registry, etc.
