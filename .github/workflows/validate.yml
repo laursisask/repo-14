@@ -1834,7 +1834,7 @@ jobs:
         \ ~/bin/shellcheck | grep -q $SHA256SUM\n# make sure to remove the old version\n\
         sudo rm -f /usr/bin/shellcheck\n"
     - continue-on-error: true
-      uses: lumaxis/shellcheck-problem-matchers@v1
+      uses: lumaxis/shellcheck-problem-matchers@v2
     - continue-on-error: true
       name: shellcheck
       run: 'make shellcheck
