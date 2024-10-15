@@ -1562,7 +1562,7 @@ jobs:
       run: make release
     - continue-on-error: true
       name: upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: release-${{ github.run_id }}
         path: release/*
