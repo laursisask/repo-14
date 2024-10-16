@@ -27,7 +27,7 @@ base58 = "~=1.0"
 cbor2 = "~=5.2"
 msgpack = "~=1.0"
 PyNaCl = "~=1.4"
-pydantic = "^2.8.2"
+pydantic = "^2.9.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "<24.4.0"
