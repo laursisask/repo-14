@@ -250,7 +250,7 @@ jobs:
       uses: nschloe/action-cached-lfs-checkout@d481127c3821f9c278a6019c39a108ac7004c133
     - continue-on-error: true
       name: Set up node
-      uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+      uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6
       with:
         cache: npm
         node-version: '18'
@@ -523,7 +523,7 @@ jobs:
 
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
-      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871
     - continue-on-error: true
       uses: gaurav-nelson/github-action-markdown-link-check@5c5dfc0ac2e225883c0e5f03a85311ec2830d368
       with:
@@ -777,7 +777,7 @@ jobs:
 
         sudo sh -c ''echo 1 > /proc/sys/net/ipv4/ip_forward'''
     - continue-on-error: true
-      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871
     - continue-on-error: true
       uses: gaurav-nelson/github-action-markdown-link-check@5c5dfc0ac2e225883c0e5f03a85311ec2830d368
       with:
