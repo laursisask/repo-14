@@ -25,16 +25,16 @@ ext {
 
     assertjVersion = '3.26.3'
     bigqueryVersion = '0.35.1'
-    junit5Version = '5.11.1'
-    mockitoVersion = '4.11.0'
+    junit5Version = '5.11.2'
+    mockitoVersion = '5.2.0'
     postgresqlVersion = '42.7.4'
-    testcontainersVersion = '1.20.1'
+    testcontainersVersion = '1.20.2'
     configurableTestConfig = [
         sparkConfFile: project.findProperty('spark.conf.file') ?: System.getProperty('spark.conf.file'),
         hostDir: project.findProperty('host.dir') ?: System.getProperty('host.dir'),
         testDir: project.findProperty('test.dir') ?: System.getProperty('test.dir')
     ]
-    micrometerVersion = '1.13.4'
+    micrometerVersion = '1.13.6'
 }
 
 // This workaround is needed because the version of Snappy that Spark 2.4.x runs with,
@@ -119,7 +119,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:${mockitoVersion}")
     testImplementation("org.mockito:mockito-inline:${mockitoVersion}")
     testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
-    testImplementation("com.databricks:databricks-sdk-java:0.4.0") {
+    testImplementation("com.databricks:databricks-sdk-java:0.32.2") {
         exclude group: 'com.fasterxml.jackson.core'
         exclude group: 'com.fasterxml.jackson.module'
     }
@@ -132,11 +132,11 @@ dependencies {
     }
     testImplementation("io.micrometer:micrometer-core:${micrometerVersion}")
     testImplementation("io.micrometer:micrometer-registry-statsd:${micrometerVersion}")
-    testImplementation('net.javacrumbs.json-unit:json-unit-assertj:2.38.0')
-    testImplementation('net.javacrumbs.json-unit:json-unit-core:2.38.0')
+    testImplementation('net.javacrumbs.json-unit:json-unit-assertj:3.4.1')
+    testImplementation('net.javacrumbs.json-unit:json-unit-core:3.4.1')
 
     testRuntimeOnly("org.slf4j:slf4j-api:2.0.16")
-    testRuntimeOnly(platform("org.apache.logging.log4j:log4j-bom:2.24.0"))
+    testRuntimeOnly(platform("org.apache.logging.log4j:log4j-bom:2.24.1"))
     testRuntimeOnly("org.apache.logging.log4j:log4j-api")
     testRuntimeOnly("org.apache.logging.log4j:log4j-core")
     testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl")
@@ -558,18 +558,18 @@ List<Dependency> hadoopClientDependencies(String spark, String scala) {
 List<Dependency> additionalJars(String spark, String scala) {
     final def registry = [
             "2.4.8": [
-                    dependencies.create("org.slf4j:slf4j-api:1.7.16"),
-                    dependencies.create("org.slf4j:slf4j-log4j12:1.7.16"),
+                    dependencies.create("org.slf4j:slf4j-api:2.0.16"),
+                    dependencies.create("org.slf4j:slf4j-log4j12:2.0.16"),
                     // 2.10.2 is the latest stable for Spark 2
-                    dependencies.create("org.apache.hadoop:hadoop-common:2.10.2", {
+                    dependencies.create("org.apache.hadoop:hadoop-common:3.4.0", {
                         exclude(group: "org.slf4j")
                     }),
                     // 2.10.2 is the latest stable for Spark 2
-                    dependencies.create("org.apache.hadoop:hadoop-mapreduce-client-core:2.10.2", {
+                    dependencies.create("org.apache.hadoop:hadoop-mapreduce-client-core:3.4.0", {
                         exclude(group: "org.slf4j")
                     }),
                     // 2.10.2 is the latest stable for Spark 2
-                    dependencies.create("org.apache.hadoop:hadoop-mapreduce-client-common:2.10.2", {
+                    dependencies.create("org.apache.hadoop:hadoop-mapreduce-client-common:3.4.0", {
                         exclude(group: "org.slf4j")
                     }),
                     // Yes, believe it or not, the Spark binaries without hadoop exclude hive
@@ -599,7 +599,7 @@ List<Dependency> additionalJars(String spark, String scala) {
                     dependencies.create("org.apache.iceberg:iceberg-spark-runtime-3.4_${scala}:1.6.0")
             ],
             "3.5.2": [
-                    dependencies.create("org.slf4j:slf4j-api:2.0.10"),
+                    dependencies.create("org.slf4j:slf4j-api:2.0.16"),
                     dependencies.create("org.slf4j:slf4j-reload4j:2.0.16"),
                     dependencies.create("org.apache.spark:spark-mllib_${scala}:${spark}", {
                         transitive = false
