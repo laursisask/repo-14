@@ -257,7 +257,7 @@ jobs:
         persist-credentials: false
     - continue-on-error: true
       name: Run analysis
-      uses: ossf/scorecard-action@v2.3.1
+      uses: ossf/scorecard-action@v2.4.0
       with:
         publish_results: true
         repo_token: ${{ secrets.SCORECARD_READ_TOKEN }}
