@@ -54,7 +54,7 @@
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>creditcardnumber</artifactId>
-      <version>4.0.2</version>
+      <version>4.0.4</version>
     </dependency>
 
     <dependency>
