@@ -48,7 +48,7 @@ criterion = "0.5"
 rand = "0.8.5"
 
 [build-dependencies]
-prost-build = { version = "0.12", optional = true }
+prost-build = { version = "0.13", optional = true }
 sha2 = { version = "0.10", optional = true }
 
 [[example]]
